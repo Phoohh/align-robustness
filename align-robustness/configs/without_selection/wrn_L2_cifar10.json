@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "experiment_id": "wrn_L2_cifar10_without_selection_reference",
+  "arch": "wrn",
+  "norm": "L2",
+  "dataset": "cifar10",
+  "selection": "no",
+  "candidate": "reference",
+  "evidence": {
+    "completed_seeds": [
+      0,
+      1,
+      2
+    ],
+    "status": "three_seed_evaluated"
+  },
+  "hyperparameters": {
+    "gamma": 0.002,
+    "awp_start": 10,
+    "lam": 1.0,
+    "bd_range": 0.1,
+    "bd_alpha": 0.75,
+    "lr": 0.1,
+    "weight_decay": 0.0005
+  },
+  "training": {
+    "epochs": 110,
+    "batch_size": 128,
+    "test_batch_size": 128,
+    "attack_steps": 10,
+    "temperature": 0.5
+  },
+  "evaluation": {
+    "protocol": "standard",
+    "batch_size": 128,
+    "aa_seed": 0
+  }
+}

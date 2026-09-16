@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "experiment_id": "wrn_L2_tinyimagenet_without_selection_e15w207",
+  "arch": "wrn",
+  "norm": "L2",
+  "dataset": "tinyimagenet",
+  "selection": "no",
+  "candidate": "e15w207",
+  "evidence": {
+    "completed_seeds": [
+      0
+    ],
+    "status": "seed0_only"
+  },
+  "hyperparameters": {
+    "gamma": 0.0065,
+    "awp_start": 0,
+    "lam": 1.75,
+    "bd_range": 0.175,
+    "bd_alpha": 0.6,
+    "lr": 0.14,
+    "weight_decay": 0.0003
+  },
+  "training": {
+    "epochs": 110,
+    "batch_size": 128,
+    "test_batch_size": 128,
+    "attack_steps": 10,
+    "temperature": 0.5
+  },
+  "evaluation": {
+    "protocol": "standard",
+    "batch_size": 128,
+    "aa_seed": 0
+  }
+}

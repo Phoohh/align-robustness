@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "tests": 11,
+  "configurations": 12,
+  "seed_commands_checked": 36,
+  "runtime": {
+    "python": "3.12",
+    "torch": "2.5.1+cpu",
+    "torchvision": "0.20.1+cpu",
+    "numpy": "1.26.4",
+    "advertorch": "0.2.3",
+    "autoattack_commit": "a39220048b3c9f2cca9a4d3a54604793c68eca7e"
+  },
+  "checks": [
+    "all 12 without-selection settings and selection-enabled configuration rejection",
+    "metric computation and nonlinear per-seed aggregation",
+    "dry-run side effects",
+    "invalid configuration rejection",
+    "actual architecture and legacy checkpoint alias compatibility",
+    "PGD Linf/L2 constraints",
+    "AWP without selection across label cases",
+    "global learning-rate schedule resume",
+    "Tiny-ImageNet flat/organized validation equivalence",
+    "standard AutoAttack on small synthetic CPU batch",
+    "training entrypoint checkpoint persistence and next-epoch resume"
+  ],
+  "limits": [
+    "No 110-epoch GPU training or full-dataset AA rerun was performed for this code packaging task.",
+    "The historical cluster environment lockfile was not supplied.",
+    "Exact RNG continuation across process restarts is not implemented."
+  ],
+  "release": "without-selection-v3"
+}

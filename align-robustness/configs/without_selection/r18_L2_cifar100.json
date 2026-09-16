@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "experiment_id": "r18_L2_cifar100_without_selection_2108",
+  "arch": "r18",
+  "norm": "L2",
+  "dataset": "cifar100",
+  "selection": "no",
+  "candidate": "2108",
+  "evidence": {
+    "completed_seeds": [
+      0,
+      1,
+      2
+    ],
+    "status": "three_seed_evaluated"
+  },
+  "hyperparameters": {
+    "gamma": 0.0025,
+    "awp_start": 5,
+    "lam": 1.25,
+    "bd_range": 0.125,
+    "bd_alpha": 0.85,
+    "lr": 0.1,
+    "weight_decay": 0.0007
+  },
+  "training": {
+    "epochs": 110,
+    "batch_size": 128,
+    "test_batch_size": 128,
+    "attack_steps": 10,
+    "temperature": 0.5
+  },
+  "evaluation": {
+    "protocol": "standard",
+    "batch_size": 128,
+    "aa_seed": 0
+  }
+}

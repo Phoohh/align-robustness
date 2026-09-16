@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "experiment_id": "wrn_Linf_cifar100_without_selection_e15wi08",
+  "arch": "wrn",
+  "norm": "Linf",
+  "dataset": "cifar100",
+  "selection": "no",
+  "candidate": "e15wi08",
+  "evidence": {
+    "completed_seeds": [
+      0,
+      1,
+      2
+    ],
+    "status": "three_seed_evaluated"
+  },
+  "hyperparameters": {
+    "gamma": 0.0065,
+    "awp_start": 0,
+    "lam": 1.5,
+    "bd_range": 0.175,
+    "bd_alpha": 0.75,
+    "lr": 0.125,
+    "weight_decay": 0.00045
+  },
+  "training": {
+    "epochs": 110,
+    "batch_size": 128,
+    "test_batch_size": 128,
+    "attack_steps": 10,
+    "temperature": 0.5
+  },
+  "evaluation": {
+    "protocol": "standard",
+    "batch_size": 128,
+    "aa_seed": 0
+  }
+}
