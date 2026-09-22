@@ -8,9 +8,11 @@
   "candidate": "e15rt05",
   "evidence": {
     "completed_seeds": [
-      0
+      0,
+      1,
+      2
     ],
-    "status": "seed0_only"
+    "status": "three_seed_evaluated"
   },
   "hyperparameters": {
     "gamma": 0.0026,

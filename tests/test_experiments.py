@@ -27,8 +27,9 @@ class ConfigurationTests(unittest.TestCase):
             self.assertEqual(environment(c)['RAAT_DATA_SELECTION'], '1')
             self.assertEqual(environment(c)['AWP_OBJECTIVE'], 'align_only')
             self.assertEqual(environment(c)['RAW_ADV_AUG_DICAR'], '0')
-        limited = [c for c in configs if c['evidence']['completed_seeds'] == [0]]
-        self.assertEqual(len(limited), 3)
+        for c in configs:
+            self.assertEqual(c['evidence']['completed_seeds'], [0, 1, 2])
+            self.assertEqual(c['evidence']['status'], 'three_seed_evaluated')
 
     def test_metrics_and_nonlinear_seed_aggregation(self):
         x = metrics(90, 50)

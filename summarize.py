@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Aggregate actual per-seed results; geometric mean is computed per seed first."""
+"""Aggregate actual results, explicitly distinguishing the two geometric summaries."""
 import argparse
 import json
 from pathlib import Path
@@ -23,12 +23,16 @@ def main():
             raise ValueError(f'Duplicate seed {seed} for {r["experiment_id"]}')
         groups[key][seed] = metrics(r['metrics']['clean'], r['metrics']['aa'])
     names = ('clean', 'aa', 'mean', 'geometric_mean')
-    print('\t'.join(('experiment', 'seeds', 'status', *names)))
+    print('\t'.join(('experiment', 'seeds', 'status', 'clean', 'aa', 'mean',
+                     'per_seed_G_mean_std', 'G_of_mean_accuracies')))
     for (name, _), seeds in sorted(groups.items()):
         full = set(seeds) == {0, 1, 2}
         values = [f'{statistics.mean(v[k] for v in seeds.values()):.3f}' +
                   (f'±{statistics.pstdev(v[k] for v in seeds.values()):.3f}' if len(seeds) > 1 else '') for k in names]
-        print('\t'.join((name, ','.join(map(str, sorted(seeds))), 'three_seed' if full else 'partial', *values)))
+        table_g = metrics(statistics.mean(v['clean'] for v in seeds.values()),
+                          statistics.mean(v['aa'] for v in seeds.values()))['geometric_mean']
+        print('\t'.join((name, ','.join(map(str, sorted(seeds))),
+                         'three_seed' if full else 'partial', *values, f'{table_g:.3f}')))
 
 
 if __name__ == '__main__':

@@ -1,0 +1,12 @@
+{
+  "record_count": 42,
+  "archived_seed_count": 6,
+  "new_seed_count": 36,
+  "source_archive_sha256": "42f96d1e41c6695f47dc93cd50b52cf330d8d3283522a0d7bf8d9b63e165fe27",
+  "private_fields_removed": [
+    "source_log"
+  ],
+  "metrics_changed": false,
+  "raw_logs_and_checkpoints_included": false,
+  "reference_note": "The 100% RAAT and Align-only rho=0.002 seeds reuse the completed reference experiment; they are shared between the two studies."
+}

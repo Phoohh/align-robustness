@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-22",
+  "scope": "Local integration of the supplied report update; no new experiments",
+  "base_commit": "0185cee4a6275b22a5873a3cd787148b3c862de5",
+  "input_zip_sha256": "31c734d435d50099cdf25728c5e0f7052f8eb182992d8639bddbda742e2b45bc",
+  "integration": {
+    "remote_snapshot_verified": "All 62 baseline blobs, the root tree, and both original commit hashes matched the live GitHub API.",
+    "git_apply_check": "passed",
+    "packaged_files_verified_before_local_validation_note": 82,
+    "training_code_changed": false,
+    "existing_figures_retained": true
+  },
+  "supported_python_validation": {
+    "python": "3.12.14",
+    "tests_discovered": 14,
+    "tests_passed": 7,
+    "tests_skipped": 7,
+    "tests_failed": 0,
+    "skip_reason": "PyTorch is not installed in this Python environment; numerical and training workflow checks remain unverified here.",
+    "dry_run_commands_checked": 36,
+    "study_records_checked": 42,
+    "rho_points": 7,
+    "dataset_size_rows": 8,
+    "regenerated_csv_and_markdown": "Byte-identical to the supplied package"
+  },
+  "initial_system_python_validation": {
+    "python": "3.9.6",
+    "note": "This system interpreter is outside the README's recommended Python 3.11/3.12 environment and has incomplete training dependencies.",
+    "tests_discovered": 14,
+    "tests_passed": 9,
+    "tests_skipped": 0,
+    "tests_errors": 5,
+    "missing_imports": ["tensorboardX", "torchvision", "autoattack", "PIL"],
+    "study_summary_max_absolute_numeric_difference": 4.440892098500626e-16,
+    "study_table_markdown": "Byte-identical to the supplied package"
+  },
+  "visual_review": [
+    "Rho: Clean on the left axis and Robust (AA) on the right, matching curve colors, separate scales explicitly labeled, population-SD error bars.",
+    "Dataset size: both methods show Clean, AA, paired-seed arithmetic Mean and G=sqrt(mean(C)*mean(R)); G has no assigned SD."
+  ],
+  "limits": [
+    "No 110-epoch GPU training or new full AutoAttack evaluation was run.",
+    "Figures were visually inspected, not regenerated in this environment.",
+    "Earlier validation records are retained separately and are not new local test results.",
+    "The historical RAAT training harness, checkpoints and full cluster logs are not included."
+  ]
+}

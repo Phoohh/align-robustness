@@ -1,5 +1,24 @@
 # Packaging changes
 
+## Report update
+
+- Moved the project from a nested directory to the repository root so the full
+  README and documented commands work from the landing page.
+- Added the completed CIFAR-10/ResNet-18 studies: 42 unique per-seed measurements,
+  protocol, provenance, a technical report, and a script regenerating CSV,
+  Markdown, PNG, PDF, and SVG outputs.
+- The rho curve uses a left Clean-accuracy axis and a right AutoAttack-accuracy
+  axis, with three-seed population-SD error bars. The dataset-size table now
+  includes arithmetic Mean and the main-table geometric aggregate G.
+- Updated three Tiny-ImageNet evidence labels from one to three completed seeds.
+  Candidate identities and all training hyperparameters are unchanged.
+- Main summaries distinguish `G_of_mean_accuracies` from `per_seed_G_mean_std`.
+  Existing per-seed result JSON metrics retain their original meanings.
+- Kept the original model, attack, training, evaluation, and resume code unchanged.
+  No new GPU training was performed for this repository update.
+
+## Historical packaging revisions
+
 - Revision 3 retains only the 12 without-selection configurations (36 seed runs).
   The public configuration driver rejects selection-enabled configurations.
   Reported metrics are Clean, AutoAttack, arithmetic mean, and geometric mean.
@@ -35,4 +54,6 @@ experiment submission definitions, not inferred from accuracy numbers.
 - Retain only the 12 without-selection configurations, including their setting-specific hyperparameters and evidence labels.
 - Restrict the configuration driver to alignment on all samples (`ALIGN_ALL_SAMPLES=1`). Classification-term boundary treatment is unchanged.
 - Keep Clean, AA, arithmetic mean, and geometric mean as reported metrics.
-- Nine configurations have three-seed historical evidence; three Tiny-ImageNet configurations remain seed-0-only in the supplied records.
+- At revision 3, nine configurations had three-seed historical evidence and
+  three Tiny-ImageNet configurations had only seed-0 evidence. The report update
+  above supersedes those three evidence labels.
