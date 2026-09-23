@@ -1,7 +1,15 @@
 # CIFAR-10 / ResNet-18 sensitivity studies
 
 This directory reproduces the **analysis and figures from recorded measurements**.
-It does not launch the historical cluster jobs or retrain RAAT.
+It does not launch the historical cluster jobs or retrain RAAT. The portable
+training driver also does not implement the class-balanced data-fraction
+selection used in this study: its dataset loaders train on the full training
+set. Changing rho in a full-data configuration does not recreate a 10%, 20%,
+or 50% experiment. The subset construction below documents the recorded
+protocol; it is not a packaged subset-training entry point.
+
+See the [reproduction coverage table](../docs/REPRODUCIBILITY.md) before choosing
+between validating recorded results and starting new training.
 
 ## Regenerate the curve and table
 

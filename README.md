@@ -8,6 +8,10 @@ This release contains 12 setting-specific without-selection configurations:
 Each run trains a model, selects its checkpoint by PGD accuracy, and then runs
 clean evaluation plus **full standard AutoAttack on all 10,000 test examples**.
 
+Start with the [reviewer reproduction guide](docs/REPRODUCIBILITY.md) for
+download-and-extract instructions, checks that need no GPU or third-party
+packages, and an explicit list of what this snapshot can reproduce.
+
 ## Report and completed studies
 
 **Ours means Align-only without data selection.** Alignment constructs the

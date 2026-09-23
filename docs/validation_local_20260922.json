@@ -1,7 +1,6 @@
 {
   "date": "2026-09-22",
   "scope": "Local integration of the supplied report update; no new experiments",
-  "base_commit": "0185cee4a6275b22a5873a3cd787148b3c862de5",
   "input_zip_sha256": "31c734d435d50099cdf25728c5e0f7052f8eb182992d8639bddbda742e2b45bc",
   "integration": {
     "remote_snapshot_verified": "All 62 baseline blobs, the root tree, and both original commit hashes matched the live GitHub API.",
