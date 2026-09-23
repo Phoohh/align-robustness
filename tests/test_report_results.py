@@ -11,9 +11,36 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from studies.reproduce_figures import load_results, summarize
+from studies.reproduce_10pct_followup import load_followup
 
 
 class RecordedStudyTests(unittest.TestCase):
+    def test_followup_reuses_original_seeds_and_keeps_separate_rho(self):
+        original = load_results(ROOT / 'results/cifar10_resnet18/per_seed.csv')
+        followup = load_followup(ROOT / 'results/cifar10_resnet18_10pct_followup/per_seed.csv')
+        self.assertEqual(followup['raat', 10, None], original['raat', 10, None])
+        self.assertEqual(followup['align', 10, .002], original['align', 10, .002])
+        self.assertNotIn(('align', 10, .001), original)
+        summary = summarize(followup)
+        self.assertAlmostEqual(summary['align', 10, .001]['aa_mean'], (28.41 + 26.77 + 29.02) / 3)
+        self.assertLess(summary['align', 10, .001]['G_of_mean_accuracies'], summary['raat', 10, None]['G_of_mean_accuracies'])
+
+    def test_followup_rejects_unpaired_incomplete_or_invalid_results(self):
+        with (ROOT / 'results/cifar10_resnet18_10pct_followup/per_seed.csv').open(newline='') as f:
+            rows = list(csv.DictReader(f))
+        invalid = [rows[:-1], rows + [rows[0]],
+                   [{**rows[0], 'subset_indices_sha256': '0' * 64}] + rows[1:],
+                   [{**rows[0], 'aa': 'nan'}] + rows[1:],
+                   [{**rows[0], 'test_size': '1000'}] + rows[1:]]
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / 'bad.csv'
+            for variant in invalid:
+                with path.open('w', newline='') as f:
+                    writer = csv.DictWriter(f, fieldnames=list(rows[0]))
+                    writer.writeheader(); writer.writerows(variant)
+                with self.assertRaises(ValueError):
+                    load_followup(path)
+
     def test_recorded_statistics_and_paired_mean_sd(self):
         groups = load_results(ROOT / 'results/cifar10_resnet18/per_seed.csv')
         summary = summarize(groups)

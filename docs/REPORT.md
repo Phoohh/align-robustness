@@ -81,6 +81,18 @@ has higher values for both aggregates at 10%.
 The clean-accuracy spread is also larger at this fraction. These descriptive
 results from three seeds do not by themselves establish statistical significance.
 
+### Follow-up at 10% training data
+
+After inspecting the 10% result, three additional runs tested rho = 0.001 with
+the same seeds, matched subsets, and all other parameters. They give Clean
+61.96 ± 2.30, AA 28.07 ± 0.95, Mean 45.01 ± 1.20, and G 41.70. Relative to
+rho = 0.002, Clean and Mean increase slightly, while AA and G decrease. Mean
+and G remain below RAAT. This follow-up does not replace a row in the original
+fixed-rho study. Its [nine-row comparison and raw seeds](../results/cifar10_resnet18_10pct_followup/comparison.md)
+include six reused reference records and three new records. All three new
+runs completed 110 epochs and full standard AA; their test set and subset
+identity were checked against the original paired runs.
+
 ### Metric definitions
 
 For clean accuracy C and robust accuracy R, Mean = (C + R)/2. We compute this
@@ -94,7 +106,9 @@ which the numerical CSV and main summary script provide separately.
 The repository includes the original model/training kernels, portable training
 and full-AA entry points, 12 without-selection configurations, the 42 study
 measurements, and a script to regenerate both visuals and numerical tables.
-The separate native RAAT training harness is not part of the portable release.
+A portable subset-training entry point now includes a separate recorded-RAAT
+baseline option, based on a source and environment audit of the native snapshot.
+See [the baseline audit](BASELINE.md) for its scope and inherited input-attack path.
 
 The supplied measurements were collected with the native experimental snapshots.
 The complete historical environment lockfile, datasets, raw cluster logs, and

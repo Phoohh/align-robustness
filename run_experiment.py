@@ -12,7 +12,18 @@ import sys
 from experiment import atomic_json, config_hash, environment, load_config, training_args
 
 
-def main():
+def commands_for(config, config_path, seed, data_root, output_dir, num_workers):
+    root = Path(__file__).resolve().parent
+    train = [sys.executable, '-u', str(root / 'train.py')] + training_args(
+        config, seed, Path(data_root).resolve(), output_dir, num_workers)
+    evaluate = [sys.executable, '-u', str(root / 'eval.py'), '--config', str(Path(config_path).resolve()),
+                '--seed', str(seed), '--checkpoint', str(output_dir / 'best.model'),
+                '--data-root', str(Path(data_root).resolve()), '--output', str(output_dir / 'result.json'),
+                '--num-workers', str(num_workers), '--require-training-complete']
+    return train, evaluate
+
+
+def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--config', required=True, type=Path)
     p.add_argument('--seeds', nargs='+', type=int, default=[0, 1, 2])
@@ -21,10 +32,12 @@ def main():
     p.add_argument('--num-workers', type=int, default=8)
     p.add_argument('--resume', action='store_true', help='Resume interrupted runs in their existing directories')
     p.add_argument('--dry-run', action='store_true', help='Print commands without importing PyTorch or running jobs')
-    a = p.parse_args()
+    a = p.parse_args(argv)
     if a.num_workers < 0 or any(s < 0 for s in a.seeds) or len(set(a.seeds)) != len(a.seeds):
         p.error('Workers/seeds must be nonnegative and seeds must be distinct')
     c = load_config(a.config)
+    if 'training_subset' in c and any(seed not in (0, 1, 2) for seed in a.seeds):
+        p.error('The recorded subset protocol supports seeds 0, 1, 2')
     root = Path(__file__).resolve().parent
     digest = config_hash(c)
     for seed in a.seeds:
@@ -32,11 +45,7 @@ def main():
         env = os.environ.copy()
         env.update(environment(c))
         env.update(PYTHONHASHSEED=str(seed), PYTHONUNBUFFERED='1')
-        train_cmd = [sys.executable, '-u', str(root / 'train.py')] + training_args(c, seed, a.data_root.resolve(), out, a.num_workers)
-        eval_cmd = [sys.executable, '-u', str(root / 'eval.py'), '--config', str(a.config.resolve()),
-                    '--seed', str(seed), '--checkpoint', str(out / 'best.model'),
-                    '--data-root', str(a.data_root.resolve()), '--output', str(out / 'result.json'),
-                    '--num-workers', str(a.num_workers), '--require-training-complete']
+        train_cmd, eval_cmd = commands_for(c, a.config, seed, a.data_root, out, a.num_workers)
         if a.dry_run:
             if a.resume:
                 train_cmd += ['--resume_path', str(out)]
@@ -54,6 +63,11 @@ def main():
                 if (out / 'result.json').exists():
                     result = json.loads((out / 'result.json').read_text())
                     if result.get('status') == 'complete' and result.get('config_sha256') == digest and result.get('seed') == seed:
+                        if 'training_subset' in c:
+                            from studies.subset import read_subset_metadata
+                            subset = read_subset_metadata(out, c['training_subset']['percent'], seed)
+                            if result.get('training_subset') != {**c['training_subset'], **subset}:
+                                raise RuntimeError(f'Existing result has invalid subset provenance: {out}')
                         print(f'SKIP_COMPLETE={out}', flush=True)
                         continue
                     raise RuntimeError(f'Existing result has invalid provenance: {out}')

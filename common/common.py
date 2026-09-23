@@ -88,6 +88,8 @@ def parse_args(default=False):
     parser.add_argument('--data_root', default='./data', help='Dataset root')
     parser.add_argument('--output_dir', default=None, help='Explicit checkpoint/log directory')
     parser.add_argument('--num_workers', type=int, default=8)
+    parser.add_argument('--study_percent', type=int, choices=(100, 50, 20, 10), default=None,
+                        help='Class-balanced CIFAR-10 training fraction; omit for ordinary full-data training')
 
     if default:
         return parser.parse_args('')  # empty string

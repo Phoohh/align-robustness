@@ -28,7 +28,7 @@ python -m unittest discover -s tests -p 'test_report_results.py' -v
 
 The study command should print
 `VALID_STUDY_SEEDS=42/42 RHO_POINTS=7/7 DATA_SIZE_ROWS=8/8`.
-The recorded-result test file contains three tests. The two CSV summaries and
+The recorded-result test file contains five tests. The two CSV summaries and
 the Markdown table in `runs/recomputed-study/` can be compared with their
 counterparts in `results/cifar10_resnet18/`. These checks validate aggregation
 and data consistency, not the measured accuracies of a newly trained model.
@@ -50,11 +50,12 @@ both methods' Clean, AA, arithmetic Mean, and geometric G.
 |---|---|---|
 | CIFAR-10 rho plot and dataset-size table | All 42 unique measured seed records, recorded protocol, CSV/Markdown aggregation, and figure generation | Historical measurements, not newly certified training results in the packaged environment |
 | Ours: 12 architecture/dataset/norm settings | Full-data training, resume, PGD-best checkpoint selection, and full standard AA; seeds 0, 1, 2 | Full per-seed main-comparison results and baseline result tables are not bundled |
-| Dataset-size training at 10%, 20%, and 50% | Exact historical subset construction is documented | The portable training loader uses the full training set; no subset-training launcher is included |
-| RAAT comparison | Measured study results and protocol | The separate original RAAT training harness is not included |
+| Dataset-size training at 10%, 20%, and 50% | `studies/run_study.py`, the native nested subset algorithm, index checksums, and full test-set evaluation | No new 110-epoch accuracy reproduction of the portable entry point is claimed |
+| RAAT comparison | Recorded results and a distinct `raat_recorded` training option using the audited baseline path | Targets the measured native snapshot; no claim of identity with every upstream RAAT revision |
+| 10% rho follow-up | Three new measured seeds at rho=0.001, compared with six reused reference seeds | Follow-up after observing the original result; Mean and G still trail RAAT |
 | Trained checkpoints, raw logs, and historical environment | Source checksums, configuration evidence, and validation records | Weights, complete raw logs, and an exact historical environment lockfile are not included |
 
-Only the two CIFAR-10 sensitivity studies include their complete per-seed
+The two CIFAR-10 sensitivity studies and the separate 10% follow-up include their complete per-seed
 measurements in this snapshot. Configuration evidence for the 12 main settings
 records historical completion; it does not mean that all settings beat their
 baselines. See [EVIDENCE.md](EVIDENCE.md). This snapshot does not claim coverage
@@ -94,6 +95,19 @@ For a different setting, use its matching configuration, seed, and checkpoint.
 `python summarize.py ./runs` summarizes completed result files; avoid placing
 duplicate evaluations of the same seed in the directory being aggregated.
 
+For the data-size study, the following paired commands use identical subsets
+at each seed. Both retain all 10,000 test images and automatically run standard AA:
+
+```bash
+python studies/run_study.py --percent 10 --rho 0.002 --seeds 0 1 2 --data-root ./data
+python studies/run_study.py --method raat_recorded --percent 10 --seeds 0 1 2 --data-root ./data
+```
+
+Change `--percent` to 20, 50, or 100 for the other fractions; use 100 for the
+full-data rho sweep. Add `--dry-run` to inspect without starting training.
+See [study instructions](../studies/README.md) and the
+[recorded baseline audit](BASELINE.md) for provenance and method labels.
+
 ## Validation status and interpretation
 
 With the full dependencies installed, run:
@@ -102,9 +116,18 @@ With the full dependencies installed, run:
 python -m unittest discover -s tests -v
 ```
 
+The latest complete-dependency check passed all 20 tests with no skips. On an
+A100 GPU, three native-baseline single-step cases produced identical parameters
+and gradients; the 12 fraction/seed subsets matched their native records (the
+100% cases retain the complete original order). A real ResNet-18 completed two
+small training epochs, including resume, with four examples per epoch and a
+finite saved checkpoint. This is a workflow check, not an accuracy reproduction.
+Exact versions, source checksums, and limitations are recorded in
+[validation_reproduction_20260923.json](validation_reproduction_20260923.json).
+
 The suite contains configuration checks, recorded-result checks, numerical
 checks, and short synthetic-data workflow checks. In the documented Python
-3.12 local integration environment, 7 tests passed and 7 were skipped because
+3.12 local integration environment for the earlier report update, 7 tests passed and 7 were skipped because
 PyTorch was absent; all 36 configuration/seed dry runs passed. A partially
 installed training environment can instead fail imports. Skips do not certify
 the corresponding numerical or training workflows. Exact records and the

@@ -25,6 +25,10 @@ def main():
         p.error('Seed and workers must be nonnegative')
     if a.output.exists():
         p.error(f'Output already exists: {a.output}')
+    subset = None
+    if 'training_subset' in c:
+        from studies.subset import read_subset_metadata
+        subset = read_subset_metadata(a.checkpoint.parent, c['training_subset']['percent'], a.seed)
     if a.require_training_complete:
         marker = a.checkpoint.parent / 'TRAIN_COMPLETE.json'
         meta = a.checkpoint.parent / 'experiment.json'
@@ -112,6 +116,10 @@ def main():
               'seed': a.seed, 'config_sha256': config_hash(c), 'checkpoint_sha256': digest,
               'test_examples': len(test), 'autoattack': c['evaluation'], 'attacks': expected,
               'metrics': metrics(clean, aa), 'versions': versions}
+    if subset is not None:
+        result['training_subset'] = {**c['training_subset'], **subset}
+    if 'study_method' in c:
+        result['study_method'] = c['study_method']
     atomic_json(a.output, result)
     print(json.dumps(result, indent=2), flush=True)
 

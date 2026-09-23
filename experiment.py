@@ -18,14 +18,21 @@ def load_config(path):
     c = json.loads(Path(path).read_text())
     required = {'schema_version', 'experiment_id', 'arch', 'norm', 'dataset',
                 'selection', 'candidate', 'evidence', 'hyperparameters', 'training', 'evaluation'}
-    if set(c) != required or c['schema_version'] != 1:
+    if set(c) not in (required, required | {'training_subset'}, required | {'training_subset', 'study_method'}) or c['schema_version'] != 1:
         raise ValueError('Unknown or missing configuration fields/schema version')
     if c['arch'] not in ('r18', 'wrn') or c['norm'] not in ('Linf', 'L2'):
         raise ValueError('Expected arch r18/wrn and norm Linf/L2')
     if c['dataset'] not in ('cifar10', 'cifar100', 'tinyimagenet'):
         raise ValueError('Unsupported dataset')
-    if c['selection'] != 'no':
+    if 'study_method' in c:
+        validate_recorded_baseline(c)
+    elif c['selection'] != 'no':
         raise ValueError('This release supports only selection="no"')
+    if 'training_subset' in c:
+        from studies.subset import validate_spec
+        validate_spec(c['training_subset'])
+        if (c['arch'], c['norm'], c['dataset']) != ('r18', 'Linf', 'cifar10'):
+            raise ValueError('Training subsets are supported only for the CIFAR-10/ResNet-18 Linf study')
     if not c['experiment_id'] or any(x not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for x in c['experiment_id']):
         raise ValueError('Invalid experiment_id')
     h = c['hyperparameters']
@@ -51,6 +58,18 @@ def load_config(path):
     return c
 
 
+def validate_recorded_baseline(c):
+    """Permit only the recorded CIFAR-10 baseline protocol, separately from Ours."""
+    if (c.get('study_method') != 'raat_recorded' or c.get('selection') != 'recorded_baseline'
+            or (c.get('arch'), c.get('norm'), c.get('dataset')) != ('r18', 'Linf', 'cifar10')
+            or 'training_subset' not in c):
+        raise ValueError('Invalid recorded RAAT baseline identity')
+    expected_h = dict(gamma=0., awp_start=10, lam=1., bd_range=.1, bd_alpha=.75, lr=.1, weight_decay=.0005)
+    expected_t = dict(epochs=110, batch_size=128, test_batch_size=128, attack_steps=10, temperature=.5)
+    if c.get('hyperparameters') != expected_h or c.get('training') != expected_t:
+        raise ValueError('The recorded RAAT baseline uses its fixed historical protocol')
+
+
 def config_hash(c):
     return hashlib.sha256(json.dumps(c, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
@@ -69,15 +88,20 @@ def training_args(c, seed, data_root, output_dir, workers):
               'lr_init': h['lr'], 'weight_decay': h['weight_decay'], 'lam': h['lam'],
               'BD_boundary_range': h['bd_range'], 'BD_alpha': h['bd_alpha'], 'T': t['temperature'],
               'data_root': str(data_root), 'output_dir': str(output_dir), 'num_workers': workers}
+    if 'training_subset' in c:
+        values['study_percent'] = c['training_subset']['percent']
     return [item for k, v in values.items() for item in ('--' + k, str(v))] + ['--BD']
 
 
 def environment(c):
-    if c['selection'] != 'no':
+    baseline = 'study_method' in c
+    if baseline:
+        validate_recorded_baseline(c)
+    elif c['selection'] != 'no':
         raise ValueError('This release supports only selection="no"')
     h = c['hyperparameters']
-    return {**{k: '0' for k in EXPERIMENTAL_FLAGS}, 'AWP_TRAIN': '1',
-            'AWP_OBJECTIVE': 'align_only', 'ALIGN_ALL_SAMPLES': '1',
+    return {**{k: '0' for k in EXPERIMENTAL_FLAGS}, 'AWP_TRAIN': '0' if baseline else '1',
+            'AWP_OBJECTIVE': 'full' if baseline else 'align_only', 'ALIGN_ALL_SAMPLES': '0' if baseline else '1',
             'AWP_GAMMA': str(h['gamma']), 'AWP_START': str(h['awp_start']),
             'RAAT_DATA_SELECTION': '1'}
 

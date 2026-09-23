@@ -23,6 +23,7 @@ this without-selection method.
 - [CIFAR-10 / ResNet-18 study protocol and reproduction instructions](studies/README.md)
 - [42 recorded per-seed results](results/cifar10_resnet18/per_seed.csv)
 - [Dataset-size comparison with RAAT](results/cifar10_resnet18/impact_of_dataset_size.md)
+- [Separate 10% follow-up: rho 0.001 versus 0.002](results/cifar10_resnet18_10pct_followup/comparison.md)
 
 ![Impact of rho](results/cifar10_resnet18/impact_of_rho.png)
 
@@ -40,6 +41,11 @@ There are seven rho points and eight method/fraction rows, all with three seeds.
 The shared 100% reference results are reused, giving 42 unique seed records.
 The separate RAAT comparison uses its original sample selection and no AWP;
 it is a baseline, not a with-selection version of Ours.
+
+Use `studies/run_study.py` to train the recorded data fractions or the full-data
+rho sweep. It provides Ours and a separately labeled `raat_recorded` baseline
+option; [study instructions](studies/README.md) describe the matched subsets,
+fixed protocol, resume checks, and full-AA evaluation.
 
 ## Install
 
@@ -139,7 +145,7 @@ step size 32/255. Alignment temperature is 0.5.
 **Align-only names the objective used to construct the weight perturbation.**
 The optimizer still trains with both classification and alignment losses.
 Alignment includes every sample, without a correctness-based selection mask.
-The driver fixes `ALIGN_ALL_SAMPLES=1` and `RAAT_DATA_SELECTION=1` and only
+For Ours, the driver fixes `ALIGN_ALL_SAMPLES=1` and `RAAT_DATA_SELECTION=1` and only
 accepts `selection: "no"`. Here the selection label refers to alignment-sample
 selection; `RAAT_DATA_SELECTION=1` preserves the inherited classification-term
 boundary treatment. Boundary treatment in the classification term
@@ -195,7 +201,9 @@ checks. They do not repeat the 110-epoch GPU experiments or reproduce their
 reported accuracies. Datasets, trained weights, and full experiment logs are
 not bundled.
 
-The latest local integration checks, including dependency limitations, are in
+The latest [complete-dependency and GPU workflow checks](docs/validation_reproduction_20260923.json)
+passed all 20 tests and verified the native subset and baseline paths.
+The earlier local integration checks, including dependency limitations, are in
 [docs/validation_local_20260922.json](docs/validation_local_20260922.json).
 [docs/validation_report_update.json](docs/validation_report_update.json) records
 the supplied package's checks; [docs/validation.json](docs/validation.json)

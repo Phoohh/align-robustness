@@ -1,0 +1,46 @@
+{
+  "BD_alpha": 0.75,
+  "attack_step": 0.00784313725490196,
+  "autoattack": "standard_full_APGD-CE_APGD-T_FAB-T_SQUARE",
+  "awp_start": 10,
+  "baseline": "original RAAT, original selection, AWP_TRAIN=0",
+  "batch_size": 128,
+  "boundary_range": 0.1,
+  "checkpoint": "PGD-best in the completed 110-epoch run",
+  "data_percent": [
+    10
+  ],
+  "dataset": "CIFAR-10",
+  "epochs": 110,
+  "epsilon": 0.03137254901960784,
+  "lam": 1,
+  "lr": 0.1,
+  "milestones": [
+    100,
+    105
+  ],
+  "model": "ResNet-18 BasicBlock [2,2,2,2]",
+  "norm": "Linf",
+  "ours": "Align-only, ALIGN_ALL_SAMPLES=1 (without selection)",
+  "revision": "10pct-rho-followup-v1",
+  "rho": [
+    "0.002",
+    "0.001"
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "std": "population (ddof=0)",
+  "subset": "nested class-balanced, identical across methods at each seed/fraction",
+  "test_size": 10000,
+  "train_pgd_steps": 10,
+  "weight_decay": 0.0005,
+  "aggregation": {
+    "accuracy": "mean and population SD across seeds 0,1,2",
+    "main_table_G": "sqrt(mean(clean)*mean(AA))",
+    "per_seed_G": "separate mean and population SD of sqrt(clean_seed*AA_seed)"
+  },
+  "design": "Follow-up after inspection of the original 10% results; rho=0.001 adds three seeds; all other parameters and paired subsets unchanged."
+}

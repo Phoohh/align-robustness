@@ -27,9 +27,10 @@
     },
     "common/common.py": {
       "source_sha256": "f3375cd7bc34e93fe1fdd24f6b005b88be7e0e962092713bad96bd9a1593a4d4",
-      "packaged_sha256": "a44b8c4a93a906b8e55093aaabd993146c95ce950f826e6a7ac9adef54135844",
+      "packaged_sha256": "1e260613acefcba2761b6157421d540913c8b169be175ca7cf4fd508f4713fdc",
       "source_lines_normalized_sha256": "951b3d424eb4c4baddd3c78d08fbc003b24d373a68450852b74bda9a53ac9f10",
-      "modified_beyond_line_endings": true
+      "modified_beyond_line_endings": true,
+      "prior_packaged_sha256": "a44b8c4a93a906b8e55093aaabd993146c95ce950f826e6a7ac9adef54135844"
     },
     "common/__init__.py": {
       "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -69,9 +70,10 @@
     },
     "datasets/datasets.py": {
       "source_sha256": "66194e781a1d283c0107119e69101a75126a50f3bf5cdef5b2361329e1d405bc",
-      "packaged_sha256": "5be082a6d59815c2122700335a1bd66ed6105798b556b0f160b0e1cc2edb718f",
+      "packaged_sha256": "0af409285c017bd6ed64da3659c4211f44ae1549bb540ee6316d509a52a1b48d",
       "source_lines_normalized_sha256": "66194e781a1d283c0107119e69101a75126a50f3bf5cdef5b2361329e1d405bc",
-      "modified_beyond_line_endings": true
+      "modified_beyond_line_endings": true,
+      "prior_packaged_sha256": "5be082a6d59815c2122700335a1bd66ed6105798b556b0f160b0e1cc2edb718f"
     },
     "evals/evals.py": {
       "source_sha256": "683c91c2da9774f3db9ae09cc0d9e2a14c8780ef29e5e9ac6ad30b507c935bda",
@@ -195,9 +197,10 @@
     },
     "utils/utils.py": {
       "source_sha256": "c202a2d38a9cc008d87ed7a6a85daca823915582c7bf4c167c11f090a9eb351a",
-      "packaged_sha256": "1916d45b7d4c13811c10ca374ce803df5cade74869156b5f34ceac29266aae0f",
+      "packaged_sha256": "89fab0aeca4ff78abba4b13248bc033f56fe126090c1672585f9996663720cd5",
       "source_lines_normalized_sha256": "404a2b31eb4a9490e32c8aa12cb637484d2b8ba684010616dbde48e60e4862ce",
-      "modified_beyond_line_endings": true
+      "modified_beyond_line_endings": true,
+      "prior_packaged_sha256": "1916d45b7d4c13811c10ca374ce803df5cade74869156b5f34ceac29266aae0f"
     },
     "train.py": {
       "source_sha256": "6ee47c4d534da56345441ebea853ee9a3c99ca28e88bd4b7551678731107b222",
@@ -212,6 +215,6 @@
     "path": "LICENSE",
     "sha256": "50de020d57cfa30f3ec4fc5568be79bec0033209b4ef98086ba6ae4a219f6478"
   },
-  "release": "without-selection-v3",
-  "configuration_scope": "12 without-selection configurations; seeds 0, 1, 2"
+  "release": "without-selection-study-reproduction-v1",
+  "configuration_scope": "12 without-selection settings plus the CIFAR-10 study launcher with a separately labeled recorded RAAT baseline"
 }

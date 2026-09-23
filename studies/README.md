@@ -1,15 +1,61 @@
 # CIFAR-10 / ResNet-18 sensitivity studies
 
-This directory reproduces the **analysis and figures from recorded measurements**.
-It does not launch the historical cluster jobs or retrain RAAT. The portable
-training driver also does not implement the class-balanced data-fraction
-selection used in this study: its dataset loaders train on the full training
-set. Changing rho in a full-data configuration does not recreate a 10%, 20%,
-or 50% experiment. The subset construction below documents the recorded
-protocol; it is not a packaged subset-training entry point.
+This directory reproduces the **analysis and figures from recorded measurements**
+and provides a portable training entry point for **Ours: Align-only without
+selection**. The study entry point implements the recorded class-balanced,
+nested data subsets. A separate `raat_recorded` option reproduces the training
+path of the baseline snapshot used in these measurements; see the
+[baseline source audit](../docs/BASELINE.md).
 
 See the [reproduction coverage table](../docs/REPRODUCIBILITY.md) before choosing
 between validating recorded results and starting new training.
+
+## Train a study setting
+
+Install the main [training dependencies](../requirements.txt), then run from the
+repository root:
+
+```bash
+# Inspect a paired three-seed 10% experiment without importing PyTorch or writing files.
+python studies/run_study.py --percent 10 --rho 0.002 --seeds 0 1 2 --dry-run
+
+# Train for 110 epochs, then run full standard AutoAttack for each seed.
+python studies/run_study.py --percent 10 --rho 0.002 --seeds 0 1 2 \
+  --data-root ./data --output-root ./runs/studies
+
+# Train the recorded RAAT baseline on exactly the same seed-specific subsets.
+python studies/run_study.py --method raat_recorded --percent 10 --seeds 0 1 2 \
+  --data-root ./data --output-root ./runs/studies
+```
+
+`--percent` accepts 100, 50, 20, or 10. Use 100 for the full-data rho sweep;
+`--rho` changes only the weight-perturbation magnitude for Ours. Omit it for
+`raat_recorded`, which has a fixed protocol and disables AWP. Its selection label
+is `recorded_baseline`, separately from Ours' `no`; Ours at rho=0 still includes
+all alignment samples and is not the RAAT baseline. Seeds are restricted to
+0, 1, and 2 to match the recorded subset protocol. Add `--resume` to continue
+an interrupted run. Completed runs are reused after their configuration and
+subset provenance have been checked.
+
+Each requested setting gets a configuration snapshot under the output root's
+`configs/` directory. Its SHA-256 includes `training_subset`, so a fraction
+change cannot silently reuse the same experiment. Each seed directory records
+`subset.json` and `train_indices.json`. The index checksum is SHA-256 of the
+comma-separated decimal indices, with no trailing comma or newline, matching
+the native experiment. The evaluator checks those records and includes the
+training subset in `result.json`; evaluation still uses all 10,000 test images.
+
+The original 12 configurations omit `training_subset` and retain their full-data
+behavior. A generated study configuration can also be passed to
+`run_experiment.py --config ...`; the explicit subset argument is derived from
+that configuration. The subset implementation and command generation have
+local tests. A new full GPU training run of this portable entry point is still
+needed before claiming numerical reproduction of the historical results.
+
+The separate [10% rho follow-up](../results/cifar10_resnet18_10pct_followup/comparison.md)
+adds three measured seeds at rho=0.001 and reuses six original reference seeds.
+Recompute its statistics with `python studies/reproduce_10pct_followup.py`.
+It does not change the original fixed-rho table or the full-data rho curve.
 
 ## Regenerate the curve and table
 

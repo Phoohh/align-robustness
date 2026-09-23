@@ -1,5 +1,17 @@
 # Packaging changes
 
+## Study reproduction completion
+
+- Added an explicit CIFAR-10 study launcher with the native nested class-balanced
+  subset algorithm. Configurations, resume checks, and results bind the selected
+  fraction and seed to an index checksum; test evaluation stays at 10,000 images.
+- Added a separate fixed-protocol `raat_recorded` option after comparing the
+  actual native baseline source manifest and runtime flags. The shared loss
+  kernel is unchanged; Ours still accepts only without-selection semantics.
+- Added the complete three-seed rho=0.001 follow-up at 10% data, reusing six
+  existing reference measurements. Kept both original study figures and their
+  fixed-rho table unchanged. The new rho does not improve Mean or G over RAAT.
+
 ## Report update
 
 - Moved the project from a nested directory to the repository root so the full

@@ -122,6 +122,9 @@ def get_dataset(P, dataset, augment, download=True):
     else:
         raise NotImplementedError()
 
+    if getattr(P, 'study_percent', None) is not None:
+        from studies.subset import apply_subset
+        train_set = apply_subset(P, dataset, train_set, test_set)
     return train_set, test_set, image_size, n_classes
 
 
