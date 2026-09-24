@@ -1,0 +1,100 @@
+{
+  "checked_at_utc": "2026-09-24T06:32:30.257362+00:00",
+  "new_seed_count": 2,
+  "reused_seed_count": 1,
+  "private_paths_removed": true,
+  "raw_logs_and_checkpoints_included": false,
+  "hyperparameters": {
+    "gamma": 0.0025,
+    "awp_start": 10,
+    "lam": 1.25,
+    "bd_range": 0.1,
+    "bd_alpha": 0.85,
+    "lr": 0.1,
+    "weight_decay": 0.00055
+  },
+  "records": [
+    {
+      "seed": 0,
+      "reused": true,
+      "result_sha256": "c54e3379c64272b48d2f6a3f611aa75e6ed1c6a83f8e8702270fc5d814d7ff98",
+      "autoattack_log_sha256": "1fbc2be0db41df12e997f0eb12b698a2c3c26eed8a20d7f52ea061609dfdd481",
+      "pgd_best_epoch": 105,
+      "last_config_sha256": "1f0cc71e137bdc3715b51b2539ca53a31f109ba4cd857c292164acf9ff244b8e",
+      "best_config_sha256": "c91c9f295440e2c60ededa09a274fc35c80534b410bc071b027a58f8230f1b66",
+      "completed_training": [
+        {
+          "log_sha256": "171a462d03a38918a0e3fff5accd4a5f6dab14b84b1602dc5c952d525bd63ad7",
+          "epoch": 110,
+          "final_lr": 0.001
+        },
+        {
+          "log_sha256": "171a462d03a38918a0e3fff5accd4a5f6dab14b84b1602dc5c952d525bd63ad7",
+          "epoch": 110,
+          "final_lr": 0.001
+        }
+      ]
+    },
+    {
+      "seed": 1,
+      "reused": false,
+      "result_sha256": "03424d251fdcd6e8694a15d6a6c52c309a9e5908269f543782f62cdca24f2ff5",
+      "autoattack_log_sha256": "ca98ea1c8100a0a15347393f6e88dee8ee8be0d50eee404c660893bed098a4b8",
+      "pgd_best_epoch": 107,
+      "last_config_sha256": "6abd69b96dfebb04b67a620d0edbc927bc7cfff0063c16e5870b34174a467c94",
+      "best_config_sha256": "68c2e5737f405da59646eb1f339f33dd18072b49a8ebde1c0735fb36ccb91284",
+      "completed_training": [
+        {
+          "log_sha256": "577429534995c5aad39f1dc114694807c5be8344777417cf3f963b115adf7095",
+          "epoch": 110,
+          "final_lr": 0.001
+        },
+        {
+          "log_sha256": "577429534995c5aad39f1dc114694807c5be8344777417cf3f963b115adf7095",
+          "epoch": 110,
+          "final_lr": 0.001
+        },
+        {
+          "log_sha256": "577429534995c5aad39f1dc114694807c5be8344777417cf3f963b115adf7095",
+          "epoch": 110,
+          "final_lr": 0.001
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "reused": false,
+      "result_sha256": "05a96e1632fc07ebc919bcfefd7b8e74ae317308624e37ea83d4f7fe5586e7db",
+      "autoattack_log_sha256": "e3b09db4a7a01f1b75ceeb0007591dc2142c88214dd782b20bd8683cd1d1064a",
+      "pgd_best_epoch": 106,
+      "last_config_sha256": "385e03d7751371a4b0687100aae23eabf9bb88a10a05d8321b984c29e360433d",
+      "best_config_sha256": "ca6abcce36a5bcbb953b4fbf9406bbf5a45b2867b8ff6d30e57902d6e65e0fd6",
+      "completed_training": [
+        {
+          "log_sha256": "fde3e85a19b56a16bc838dce7f8e5c9e6863ce88c0cc6aedc20d4fdeef3e8239",
+          "epoch": 110,
+          "final_lr": 0.001
+        },
+        {
+          "log_sha256": "fde3e85a19b56a16bc838dce7f8e5c9e6863ce88c0cc6aedc20d4fdeef3e8239",
+          "epoch": 110,
+          "final_lr": 0.001
+        },
+        {
+          "log_sha256": "fde3e85a19b56a16bc838dce7f8e5c9e6863ce88c0cc6aedc20d4fdeef3e8239",
+          "epoch": 110,
+          "final_lr": 0.001
+        }
+      ]
+    }
+  ],
+  "fixed_targets": {
+    "target_mean": 36.61,
+    "baseline_clean": 51.86,
+    "baseline_aa": 20.69,
+    "target_G": 32.75642532389638
+  },
+  "target_precision": "Archived rounded aggregate targets, not reconstructed per-seed baseline measurements. The Mean and G maxima may come from different baselines.",
+  "test_size_check": "All four AA stages completed; APGD-CE attacked exactly clean_accuracy_percent*100 initially correct images, consistent with the full 10000-image test set.",
+  "per_seed_csv_sha256": "1ed2b3c0a390e82157ff18f7485ca589677840608bb2f62f0602da00c8c1cdd1"
+}

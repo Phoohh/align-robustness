@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "experiment_id": "wrn_Linf_tinyimagenet_without_selection_e15wt03",
+  "experiment_id": "wrn_Linf_tinyimagenet_without_selection_e15wt10",
   "arch": "wrn",
   "norm": "Linf",
   "dataset": "tinyimagenet",
   "selection": "no",
-  "candidate": "e15wt03",
+  "candidate": "e15wt10",
   "evidence": {
     "completed_seeds": [
       0,
@@ -15,12 +15,12 @@
     "status": "three_seed_evaluated"
   },
   "hyperparameters": {
-    "gamma": 0.0025,
-    "awp_start": 10,
-    "lam": 1.25,
+    "gamma": 0.0035,
+    "awp_start": 5,
+    "lam": 1.75,
     "bd_range": 0.1,
-    "bd_alpha": 0.85,
-    "lr": 0.1,
+    "bd_alpha": 0.8,
+    "lr": 0.065,
     "weight_decay": 0.00055
   },
   "training": {

@@ -93,6 +93,18 @@ include six reused reference records and three new records. All three new
 runs completed 110 epochs and full standard AA; their test set and subset
 identity were checked against the original paired runs.
 
+### WRN / Tiny-ImageNet / L∞ follow-up
+
+The historical `e15wt03` candidate now has three completed seeds after reusing
+seed 0 and training seeds 1 and 2. Clean is 55.77 ± 0.30, AA 19.52 ± 0.12,
+Mean 37.64 ± 0.13, and G 32.99. Both aggregates exceed their respective fixed
+archived baseline targets; AA remains below the cited baseline AA of 20.69.
+This is a descriptive, history-informed comparison, not a significance claim.
+The [complete seeds and evidence](../results/wrn_tinyimagenet_linf_followup/README.md)
+record 110-epoch completion, final LR 0.001, and all four standard AA stages.
+The released setting now uses `e15wt03`; its previous `e15wt10` configuration
+and summary are retained. The original CIFAR-10 studies are unchanged.
+
 ### Metric definitions
 
 For clean accuracy C and robust accuracy R, Mean = (C + R)/2. We compute this

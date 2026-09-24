@@ -1,5 +1,15 @@
 # Packaging changes
 
+## Completed WRN follow-up
+
+- Reused `e15wt03` seed 0 and completed its missing seeds 1 and 2 with full AA.
+  Published the three raw records, unrounded statistics, and sanitized provenance.
+- Updated only the WRN L∞ Tiny-ImageNet selected configuration from `e15wt10`
+  to `e15wt03`, retaining the previous configuration and historical summary.
+  Mean and G exceed their fixed archived targets; AA remains below the cited
+  baseline AA. No new parameter combination was introduced.
+- Kept Python source and both original CIFAR-10 study figures/data unchanged.
+
 ## Study reproduction completion
 
 - Added an explicit CIFAR-10 study launcher with the native nested class-balanced

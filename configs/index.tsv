@@ -10,4 +10,4 @@ wrn	L2	cifar10	no	reference	0,1,2	three_seed_evaluated	0.002	10	1.0	0.1	0.75	0.1
 wrn	L2	tinyimagenet	no	e15w207	0,1,2	three_seed_evaluated	0.0065	0	1.75	0.175	0.6	0.14	0.0003	configs/without_selection/wrn_L2_tinyimagenet.json
 wrn	Linf	cifar100	no	e15wi08	0,1,2	three_seed_evaluated	0.0065	0	1.5	0.175	0.75	0.125	0.00045	configs/without_selection/wrn_Linf_cifar100.json
 wrn	Linf	cifar10	no	w2c05	0,1,2	three_seed_evaluated	0.0025	10	1.0	0.1	0.75	0.125	0.0005	configs/without_selection/wrn_Linf_cifar10.json
-wrn	Linf	tinyimagenet	no	e15wt10	0,1,2	three_seed_evaluated	0.0035	5	1.75	0.1	0.8	0.065	0.00055	configs/without_selection/wrn_Linf_tinyimagenet.json
+wrn	Linf	tinyimagenet	no	e15wt03	0,1,2	three_seed_evaluated	0.0025	10	1.25	0.1	0.85	0.1	0.00055	configs/without_selection/wrn_Linf_tinyimagenet.json

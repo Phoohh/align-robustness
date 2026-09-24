@@ -123,7 +123,10 @@ hyperparameters. The JSON files specify the same values. These without-selection
 configurations preserve the recorded per-setting hyperparameters. All 12 now have
 recorded evaluations for seeds 0, 1, and 2. The three Tiny-ImageNet entries
 previously labeled seed-0-only have been updated from the completion records.
-These evidence labels describe the historical experiments, not a new reproduction
+The WRN L∞ Tiny-ImageNet setting now selects `e15wt03` after its missing seeds
+completed; [the follow-up](results/wrn_tinyimagenet_linf_followup/README.md)
+includes all three raw records and preserves the previous configuration.
+These evidence labels describe the native experiments, not a new reproduction
 with this packaged environment. Completion does not imply that every setting
 outperforms all baselines. See [the evidence update](docs/EVIDENCE.md).
 
