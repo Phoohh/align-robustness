@@ -23,6 +23,7 @@ they do not download datasets or run training:
 ```bash
 python run_experiment.py --config configs/without_selection/r18_Linf_cifar10.json --seeds 0 --dry-run
 python studies/reproduce_figures.py --no-plots --output-dir ./runs/recomputed-study
+python studies/reproduce_main_results.py --output-dir ./runs/recomputed-main
 python -m unittest discover -s tests -p 'test_report_results.py' -v
 ```
 
@@ -32,6 +33,9 @@ The recorded-result test file contains five tests. The two CSV summaries and
 the Markdown table in `runs/recomputed-study/` can be compared with their
 counterparts in `results/cifar10_resnet18/`. These checks validate aggregation
 and data consistency, not the measured accuracies of a newly trained model.
+The main-comparison command should print
+`OURS_SEEDS=36/36 BASELINE_SEEDS=108/216 COMPLETE_GROUPS=48/84`.
+Its coverage CSV leaves missing WRN baseline seed groups explicit.
 
 To render both figures as well, install the plotting dependencies:
 
@@ -49,10 +53,12 @@ both methods' Clean, AA, arithmetic Mean, and geometric G.
 | Artifact or experiment | Included capability | Remaining limitation |
 |---|---|---|
 | CIFAR-10 rho plot and dataset-size table | All 42 unique measured seed records, recorded protocol, CSV/Markdown aggregation, and figure generation | Historical measurements, not newly certified training results in the packaged environment |
-| Ours: 12 architecture/dataset/norm settings | Full-data training, resume, PGD-best checkpoint selection, and full standard AA; seeds 0, 1, 2 | Full per-seed main-comparison results and baseline result tables are not bundled |
+| Ours: 12 architecture/dataset/norm settings | Full-data training, resume, PGD-best checkpoint selection, full standard AA, and all 36 recorded seeds | Native evidence varies from recovered tables to checked training logs; no new full training reproduction with the portable package |
+| Main baselines | 108 ResNet-18 seed records and separately archived WRN reported aggregates | 108 WRN baseline seed records remain unavailable |
 | Dataset-size training at 10%, 20%, and 50% | `studies/run_study.py`, the native nested subset algorithm, index checksums, and full test-set evaluation | No new 110-epoch accuracy reproduction of the portable entry point is claimed |
 | RAAT comparison | Recorded results and a distinct `raat_recorded` training option using the audited baseline path | Targets the measured native snapshot; no claim of identity with every upstream RAAT revision |
 | 10% rho follow-up | Three new measured seeds at rho=0.001, compared with six reused reference seeds | Follow-up after observing the original result; Mean and G still trail RAAT |
+| Tiny-ImageNet L∞ follow-ups | Missing seeds completed for existing WRN and ResNet-18 candidates, with all raw measurements | WRN exceeds both fixed aggregate targets; ResNet-18 still misses G; comparisons informed by previous results |
 | Trained checkpoints, raw logs, and historical environment | Source checksums, configuration evidence, and validation records | Weights, complete raw logs, and an exact historical environment lockfile are not included |
 
 The two CIFAR-10 sensitivity studies and the separate 10% follow-up include their complete per-seed
@@ -60,6 +66,8 @@ measurements in this snapshot. Configuration evidence for the 12 main settings
 records historical completion; it does not mean that all settings beat their
 baselines. See [EVIDENCE.md](EVIDENCE.md). This snapshot does not claim coverage
 of every experiment that may appear in a manuscript.
+The [main data catalog](../results/main_without_selection/README.md) lists source
+coverage and differentiates archival measurements from freshly checked logs.
 
 ## Train and evaluate Ours
 
@@ -116,7 +124,10 @@ With the full dependencies installed, run:
 python -m unittest discover -s tests -v
 ```
 
-The latest complete-dependency check passed all 20 tests with no skips. On an
+The complete-dependency check of the earlier source passed all 20 tests then
+present with no skips. The main-data update adds three standard-library tests;
+its local check passed 16 tests and skipped seven for missing PyTorch, as recorded
+in [validation_main_20260925.json](validation_main_20260925.json). On an
 A100 GPU, three native-baseline single-step cases produced identical parameters
 and gradients; the 12 fraction/seed subsets matched their native records (the
 100% cases retain the complete original order). A real ResNet-18 completed two

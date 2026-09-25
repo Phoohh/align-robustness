@@ -1,5 +1,18 @@
 # Packaging changes
 
+## Recovered main data and completed ResNet-18 follow-up
+
+- Added all 36 current Ours seed records, 108 ResNet-18 baseline records,
+  unrounded summaries, and explicit source/coverage metadata. Kept the missing
+  108 WRN baseline seed records unavailable and archived reported aggregates
+  separately; historical harmonic NRR values are never relabeled as G.
+- Completed existing `g19rt03` seeds 1 and 2, reusing seed 0. Selected this
+  improved ResNet-18 L∞ Tiny-ImageNet candidate and retained `e15rt05`'s config
+  and measurements. G still misses its fixed baseline target.
+- Added a dependency-free main-table reproduction command and three checks for
+  source consistency, missing coverage, duplicate/incomplete seeds, and candidate
+  identity. Original study figures/data and training kernels remain unchanged.
+
 ## Completed WRN follow-up
 
 - Reused `e15wt03` seed 0 and completed its missing seeds 1 and 2 with full AA.

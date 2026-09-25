@@ -105,6 +105,24 @@ record 110-epoch completion, final LR 0.001, and all four standard AA stages.
 The released setting now uses `e15wt03`; its previous `e15wt10` configuration
 and summary are retained. The original CIFAR-10 studies are unchanged.
 
+### ResNet-18 / Tiny-ImageNet / L∞ follow-up
+
+Completing seeds 1 and 2 of the existing `g19rt03` candidate gives Clean
+49.58 ± 0.24, AA 15.94 ± 0.09, Mean 32.76 ± 0.09, and G 28.11 over three seeds.
+Mean and G improve on `e15rt05`, but G remains below the fixed baseline target
+28.19006. Training and all AA stages completed; this is an observed target miss.
+The released configuration selects the improved candidate while retaining the
+[previous configuration and measurements](../results/r18_tinyimagenet_linf_followup/README.md).
+
+### Recovered main-comparison data
+
+The [main catalog](../results/main_without_selection/README.md) includes all
+36 selected Ours seeds and 108 ResNet-18 baseline seeds, with statistics computed
+from the recorded per-seed accuracies. The remaining 108 WRN baseline seeds are
+unavailable; their reported rounded aggregates are archived separately.
+Source evidence ranges from recovered authoritative tables and result metadata
+to checked native training and full-AA logs, as labeled for every record.
+
 ### Metric definitions
 
 For clean accuracy C and robust accuracy R, Mean = (C + R)/2. We compute this
@@ -129,6 +147,7 @@ metrics, and the recorded-result analysis; they do not repeat 110-epoch GPU
 training or certify an exact numerical reproduction in a new environment.
 The original training and loss kernels were retained in this report update.
 
-This report covers the two sensitivity studies. It does not claim complete
+This report covers the sensitivity studies and the documented main-data recovery.
+It does not claim complete
 baseline dominance across all 12 settings or replace the main comparison table
 with a selection of sensitivity-study results.

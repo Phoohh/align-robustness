@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "experiment_id": "r18_Linf_tinyimagenet_without_selection_g19rt03",
+  "experiment_id": "r18_Linf_tinyimagenet_without_selection_e15rt05",
   "arch": "r18",
   "norm": "Linf",
   "dataset": "tinyimagenet",
   "selection": "no",
-  "candidate": "g19rt03",
+  "candidate": "e15rt05",
   "evidence": {
     "completed_seeds": [
       0,
@@ -17,7 +17,7 @@
   "hyperparameters": {
     "gamma": 0.0026,
     "awp_start": 0,
-    "lam": 1.35,
+    "lam": 1.5,
     "bd_range": 0.15,
     "bd_alpha": 0.85,
     "lr": 0.105,

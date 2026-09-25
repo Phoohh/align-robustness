@@ -6,7 +6,7 @@ not certify a new GPU reproduction using the portable release environment.
 The following three entries previously listed only seed 0. The completed-run
 summary now records seeds 0, 1, and 2 for the **same candidate** in each entry.
 In that original update, only evidence metadata changed. The later WRN L∞
-follow-up below replaces one selected candidate after its missing seeds completed.
+follow-ups below replace selected candidates after their missing seeds completed.
 
 | Architecture | Norm | Dataset | Candidate | Seeds | Mean | G | Both above fixed baseline maxima? |
 |---|---|---|---|---|---:|---:|---|
@@ -16,8 +16,8 @@ follow-up below replaces one selected candidate after its missing seeds complete
 
 Here G = sqrt(mean(Clean) × mean(AA)), using unrounded seed means in the original
 summary. The numbers above are the reported rounded summary, not reconstructed
-individual seeds. Per-seed raw records for these three entries are not bundled
-in this update. The evidence source is the completed geometric-result summary
+individual seeds. The original update did not bundle these individual records;
+the later recovery below adds the current selected records. The original evidence source was the completed geometric-result summary
 provided with the experiment logs.
 
 All 12 configuration entries now have recorded three-seed evidence. This count
@@ -39,7 +39,25 @@ defined fixed threshold 32.75643. These reference thresholds can come from
 different baselines. AA remains below the cited baseline AA of 20.69;
 the aggregate improvement does not imply superiority on every metric or
 statistical significance. No new parameter combination was added for this
-completion, and other settings retain their existing configurations.
+completion. The subsequent ResNet-18 completion is described below.
+
+## Completed ResNet-18 L∞ follow-up and recovered main records
+
+The existing `g19rt03` candidate now has all three seeds, reusing seed 0 and
+completing seeds 1 and 2 with 110 epochs and full standard AA. Clean / AA /
+Mean / G are 49.58333 / 15.93667 / 32.76000 / 28.11037. Mean and G improve on
+`e15rt05`, so the released configuration now selects `g19rt03`. G still falls
+below the fixed target 28.19006. The previous configuration and both candidates'
+measurements remain in the [follow-up](../results/r18_tinyimagenet_linf_followup/README.md).
+
+The [main catalog](../results/main_without_selection/README.md) now contains
+36/36 Ours and 108/216 baseline seed measurements. The missing baseline records
+are all WRN; their separately archived reported aggregates are not converted
+into seed measurements. The recovered ResNet-18 reference table includes the
+previously missing L2 CIFAR-10 Ours seeds. Source checksums and evidence levels
+are recorded without personal paths. Full training logs were checked for 27 of
+the selected Ours records; six are supported by the authoritative archived table
+and three by native result metadata.
 
 Changing evidence metadata changes the configuration hash used by the portable
 driver. To resume a portable run created with an older release, retain its exact

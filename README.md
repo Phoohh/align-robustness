@@ -24,6 +24,8 @@ this without-selection method.
 - [42 recorded per-seed results](results/cifar10_resnet18/per_seed.csv)
 - [Dataset-size comparison with RAAT](results/cifar10_resnet18/impact_of_dataset_size.md)
 - [Separate 10% follow-up: rho 0.001 versus 0.002](results/cifar10_resnet18_10pct_followup/comparison.md)
+- [Main comparison: all 36 Ours seeds and 108 ResNet-18 baseline seeds](results/main_without_selection/README.md)
+- [Completed ResNet-18 / Tiny-ImageNet follow-up](results/r18_tinyimagenet_linf_followup/README.md)
 
 ![Impact of rho](results/cifar10_resnet18/impact_of_rho.png)
 
@@ -126,6 +128,10 @@ previously labeled seed-0-only have been updated from the completion records.
 The WRN L∞ Tiny-ImageNet setting now selects `e15wt03` after its missing seeds
 completed; [the follow-up](results/wrn_tinyimagenet_linf_followup/README.md)
 includes all three raw records and preserves the previous configuration.
+The ResNet-18 L∞ Tiny-ImageNet setting now selects `g19rt03`, which improves
+Mean and G over `e15rt05` but still misses the fixed G target. Its previous
+configuration and all six comparison records are retained in the
+[follow-up](results/r18_tinyimagenet_linf_followup/README.md).
 These evidence labels describe the native experiments, not a new reproduction
 with this packaged environment. Completion does not imply that every setting
 outperforms all baselines. See [the evidence update](docs/EVIDENCE.md).
@@ -170,6 +176,17 @@ compatibility. Tiny-ImageNet uses first-convolution stride 2 in both models.
 python summarize.py ./runs
 ```
 
+Recompute the recovered main-comparison measurements without training:
+
+```bash
+python studies/reproduce_main_results.py --output-dir ./runs/recomputed-main
+```
+
+All 36 Ours seed records are included. ResNet-18 baseline records cover 108/108;
+WRN baseline per-seed records remain missing, with only their reported rounded
+aggregates archived separately. [Coverage and evidence levels](results/main_without_selection/README.md)
+distinguish recovered tables, result metadata, and verified native training logs.
+
 For clean accuracy C and AutoAttack accuracy R (both in percent):
 
 - Mean = (C + R) / 2
@@ -204,8 +221,11 @@ checks. They do not repeat the 110-epoch GPU experiments or reproduce their
 reported accuracies. Datasets, trained weights, and full experiment logs are
 not bundled.
 
-The latest [complete-dependency and GPU workflow checks](docs/validation_reproduction_20260923.json)
-passed all 20 tests and verified the native subset and baseline paths.
+The earlier [complete-dependency and GPU workflow checks](docs/validation_reproduction_20260923.json)
+passed all 20 tests then present and verified the native subset and baseline paths.
+The [main-result update checks](docs/validation_main_20260925.json) passed 16 tests
+locally, including three new result-integrity checks; seven PyTorch-dependent
+tests were skipped in that environment. Training kernels are unchanged.
 The earlier local integration checks, including dependency limitations, are in
 [docs/validation_local_20260922.json](docs/validation_local_20260922.json).
 [docs/validation_report_update.json](docs/validation_report_update.json) records
