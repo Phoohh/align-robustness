@@ -1,0 +1,25 @@
+{
+  "release": "report-and-sensitivity-studies",
+  "status": "passed_with_documented_skips",
+  "tests_discovered": 14,
+  "tests_passed": 7,
+  "tests_skipped": 7,
+  "skip_reason": "PyTorch is unavailable in the current packaging runtime; the seven original numerical tests were not rerun.",
+  "plot_runtime": {
+    "python": "3.12.14",
+    "matplotlib": "3.10.8"
+  },
+  "checks": [
+    "42 recorded seed measurements retained without numerical changes",
+    "paired-seed arithmetic-mean SD and explicit geometric aggregation",
+    "missing, duplicate, and nonfinite study results rejected",
+    "dual-axis rho curve and eight-row dataset-size table visually inspected",
+    "34 original model, attack, dataset and training source hashes unchanged"
+  ],
+  "limits": [
+    "No GPU training or full AutoAttack evaluation was rerun for this update.",
+    "docs/validation.json is the earlier release validation, not a claim about this runtime.",
+    "The separate historical native RAAT training harness is not included."
+  ],
+  "dry_run_commands_checked": 36
+}

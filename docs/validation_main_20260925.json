@@ -1,0 +1,48 @@
+{
+  "checked_at_utc": "2026-09-25T11:27:53.571487+00:00",
+  "python": "3.12.14",
+  "tests": {
+    "total": 23,
+    "passed": 16,
+    "skipped": 7,
+    "skip_reason": "PyTorch is not installed in this local validation environment."
+  },
+  "configuration_seed_dry_runs": {
+    "passed": 36,
+    "total": 36
+  },
+  "result_checks": {
+    "ours_seeds": 36,
+    "baseline_seeds": 108,
+    "expected_baseline_seeds": 216,
+    "complete_groups": 48,
+    "expected_groups": 84,
+    "missing_baselines": "WRN: all six baseline methods across six dataset/norm settings.",
+    "r18_archived_baseline_mean_sd_reconciliation": "All 36 groups match the reported Clean, AA, and paired Mean means/SDs within reporting precision."
+  },
+  "preserved_previous_files": 60,
+  "training_kernels_unchanged": true,
+  "original_study_data_and_figures_unchanged": true,
+  "anonymous_identifier_scan": "passed",
+  "regenerated_csv_and_markdown": "byte_identical",
+  "source_sha256": {
+    "configs/index.tsv": "384ecc22ce54e870bb72116c2c4641f82f1bacae3385fdb205dca324a284e937",
+    "configs/without_selection/r18_Linf_tinyimagenet.json": "c1a29e8d8f50daf3f612e2c08e3abe29047348b4564b63019e4ed6fa619f0660",
+    "results/main_without_selection/coverage.csv": "19c670f9a4439bc29b131622e47ca25eeb73576ae11f65b79a6cb81638efb989",
+    "results/main_without_selection/per_seed.csv": "09fa9ff6c362edf190889e76a9d789dc5c71547d3bdbf78a5a3e6951908598a4",
+    "results/main_without_selection/provenance.json": "c890aafbf1349f74c6e278733ff66a25e1b54a879c8cebb6d7bd1226f497b596",
+    "results/main_without_selection/summary.csv": "3f61eeee3ebf4f57cccd312b87ee06c12e167b126748e3fc47b33d966a36b2b4",
+    "results/main_without_selection/wrn_baseline_reported_aggregates.csv": "612a4e03eb6c4314b2987bc202466a0a2bd7ce0871324bf24d02812fe669e34e",
+    "results/r18_tinyimagenet_linf_followup/historical_e15rt05_config.json": "bc9d72e12beca66d6cb924befb84cacea52b3f9b971603ffb5deb4e6684c1ab0",
+    "results/r18_tinyimagenet_linf_followup/per_seed.csv": "cefb590fcd56dd73b0b523d85ee9b0e9bcf00e3785e9747a969127c78b6d7d00",
+    "results/r18_tinyimagenet_linf_followup/provenance.json": "a2c5f33142198399d824c368a79a358b80ba21f41faa2133f64fbd02f12d8dcd",
+    "results/r18_tinyimagenet_linf_followup/summary.csv": "c33a48b8d956247020b5ebcee164e59d46890f2dc42ac32978e6c6c5eb43361e",
+    "studies/reproduce_main_results.py": "4b6d618f236b74a0c21910ee08bd3b37f7783c4fdf291171f8e310c2bd6af676",
+    "tests/test_main_results.py": "428ec1e1caf3b5b670a30d515d14776ad4819a80e8b8c109435a3864424a2934"
+  },
+  "limitations": [
+    "This is not a full 110-epoch accuracy reproduction with the portable environment.",
+    "Seven GPU/numerical workflow tests were not rerun locally; the prior complete-dependency check remains separately documented.",
+    "108 WRN baseline seed records and complete raw logs/checkpoints are not bundled."
+  ]
+}

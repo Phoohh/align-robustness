@@ -1,0 +1,183 @@
+{
+  "versions": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "numpy": "1.26.4",
+    "advertorch": "0.2.3"
+  },
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "cuda": "12.8",
+  "cpu_tests_exit": 0,
+  "recorded_baseline_one_step_parity": [
+    {
+      "labels": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "max_parameter_difference": 0.0,
+      "gradients_exact": true
+    },
+    {
+      "labels": [
+        0,
+        1,
+        0,
+        2
+      ],
+      "max_parameter_difference": 0.0,
+      "gradients_exact": true
+    },
+    {
+      "labels": [
+        1,
+        2,
+        1,
+        2
+      ],
+      "max_parameter_difference": 0.0,
+      "gradients_exact": true
+    }
+  ],
+  "real_cifar10_subset_checks": [
+    {
+      "seed": 0,
+      "percent": 100,
+      "indices_sha256": "20d955083da5e4d754ae1b14007c11708069624d60d6177d37831503bd7fc543"
+    },
+    {
+      "seed": 0,
+      "percent": 50,
+      "indices_sha256": "6f1e3ac7237f215db16d556e401a0ceaf717cd31b454d4ec6eb96223fc8ce9d3"
+    },
+    {
+      "seed": 0,
+      "percent": 20,
+      "indices_sha256": "bc87c312d2d0eeaf62c78f008e31259198b86976c65b8c8332899ed9b13a9eec"
+    },
+    {
+      "seed": 0,
+      "percent": 10,
+      "indices_sha256": "850d3ee73e7aefe67a6709bd8d7769179d5e701cd92eebfdd5e5657fc5d34c74"
+    },
+    {
+      "seed": 1,
+      "percent": 100,
+      "indices_sha256": "20d955083da5e4d754ae1b14007c11708069624d60d6177d37831503bd7fc543"
+    },
+    {
+      "seed": 1,
+      "percent": 50,
+      "indices_sha256": "21fd7a531147306b041215ce76dead074767803044160b2c8fb05556d5902da5"
+    },
+    {
+      "seed": 1,
+      "percent": 20,
+      "indices_sha256": "0cdbfebe182d65e905188abc08eae5be1d9a2216abe760ff51e942ae3a1c1e15"
+    },
+    {
+      "seed": 1,
+      "percent": 10,
+      "indices_sha256": "3e04d656b9418e5b2108290d6ef58d8cee316ba9319770eb0d646582ba8e385f"
+    },
+    {
+      "seed": 2,
+      "percent": 100,
+      "indices_sha256": "20d955083da5e4d754ae1b14007c11708069624d60d6177d37831503bd7fc543"
+    },
+    {
+      "seed": 2,
+      "percent": 50,
+      "indices_sha256": "2b8fac92415cb1fd75bebfcb38f64434bf3753610a277fbf51b4f77745ab94ef"
+    },
+    {
+      "seed": 2,
+      "percent": 20,
+      "indices_sha256": "86f31df3c75a8ea98dd1437aab3b3716db7625d45abe2a1e11f82b539710ed7b"
+    },
+    {
+      "seed": 2,
+      "percent": 10,
+      "indices_sha256": "712486319fe3da052a1293756b83fcefd33b4cf2a826257871a758580a40fa16"
+    }
+  ],
+  "gpu_real_resnet18_training_and_resume": {
+    "epochs": 2,
+    "examples_per_epoch": 4,
+    "cuda_forward_calls": 26,
+    "checkpoint_finite": true
+  },
+  "status": "passed",
+  "limitations": [
+    "Small workflow validation only; not a new 110-epoch accuracy reproduction",
+    "Baseline parity covers three label cases for one optimizer step",
+    "Historical environment differs from recommended portable install versions"
+  ],
+  "cpu_test_counts": {
+    "run": 20,
+    "passed": 20,
+    "skipped": 0,
+    "failed": 0
+  },
+  "local_python312": {
+    "passed": 13,
+    "skipped_missing_torch": 7,
+    "failed": 0
+  },
+  "original_configuration_seed_dry_runs": 36,
+  "study_configuration_seed_combinations_validated": 96,
+  "tested_python_sha256": {
+    "adv_lib/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "adv_lib/attack.py": "6519ea6b9671e57280d5e9b7408859bb5ff999b78c89af117ea86efe74681ecc",
+    "adv_lib/compat.py": "c85f7ece60e924ee5b5c6b388041059a6da35a263ac59aad3afa4528fe590dfe",
+    "adv_lib/mart.py": "4958dc91619168269a64b153a081630adfce9a9ba38a9f2e7abd8c0ed439f5a6",
+    "adv_lib/trades.py": "4853a7cd6c82bc9a0a09de6823b7abe3889e4bc3a05c5ff10475a2cccbba715b",
+    "common/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "common/common.py": "1e260613acefcba2761b6157421d540913c8b169be175ca7cf4fd508f4713fdc",
+    "common/train.py": "6da32b8e80eac23a1f9a3d420f0dba5a9b0371b91f444ef4022549979ff112f5",
+    "common/utils.py": "7db07b7108ee838f33e7e270d6e11e7ef04ee27fcb00972441977c370c4ff744",
+    "datasets/__init__.py": "4a033ad39a5710015212582ecef3b1031590db6fdcd27c219c9aad3c7546c5e7",
+    "datasets/autoaugment.py": "4c6b173d36c9e9b58701c2ebdd8a6ab0e3f0df691383fa25c0595d1d86e134fd",
+    "datasets/cifar_c.py": "8bfc5901a446e4e75c36094f0611fb1c226a2e9abddf231d69479a3fb289f196",
+    "datasets/datasets.py": "0af409285c017bd6ed64da3659c4211f44ae1549bb540ee6316d509a52a1b48d",
+    "datasets/tiny_validation.py": "fbaa6e2eb4b16767ab24e789d9ae0953324a221862428c33d08fdc4c53f09420",
+    "eval.py": "4bccf5887c05b87c4928ddc8f5136b01ac01ba33a0fde3c2b8cff2170c787982",
+    "evals/__init__.py": "4f93872baa7d2c2c3cf239bc7cc0912aa56d7e86e585172ac2432a7ba10af455",
+    "evals/evals.py": "4e717ead1b6d930b061204d19b61d49410c86ca0926c3834343fe3819ff21daa",
+    "experiment.py": "a4a56ee23239b67f689200ea4f2d444a0fe0b79dde199bfee6ae4e9875d3fc55",
+    "models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "models/base_model.py": "8b86551f89fee118f72129115e1ca594c62f1b07e576a986fddbcd55b0ece429",
+    "models/classifier.py": "da61b2b4792bd2a139a5d4064f0fb474a8da2c18b8a8d6536c7589893011cec9",
+    "models/resnet.py": "4b8cb1e7341356c10b8c03ee77d28761ebdf565ef3086a0ce681cc1670a03746",
+    "models/wide_resnet.py": "e5ed4a979b53e8395fc1884e1bef07f33ca5d7e81721169fdf1d541ae8871759",
+    "run_experiment.py": "c8eafce239ac2edcf1f6d3a02fba003273e0b6bd6f2eb1a239c2be08d6543747",
+    "studies/__init__.py": "a9c2c1bf44e1d2db3e671c015b0233273ea8266badde022250ae44f4a11290ad",
+    "studies/reproduce_10pct_followup.py": "4dac7c59e0b74d8dfc8bc5f1fafde0581edac6d1c623d34a1163750453786ef5",
+    "studies/reproduce_figures.py": "3c3a39207a49d62893f534a2b4699562795fa7566362fc538835ec7d28e76a4f",
+    "studies/run_study.py": "8bbf5f9d991be8023b5d1241e0894e70fbd5a406d26a26cf42ddaeddb6fed2af",
+    "studies/subset.py": "f1d422141d8c5ecf2d5aaa75451724f73642bf1e2f48607227419611cf96927f",
+    "summarize.py": "492b2210d5e79c52248f2b45336a7173e621c7f8af40a9228ec2cfad9792dbd4",
+    "tests/test_experiments.py": "e160ad1552b04ecb77f19341d0d6846b91e4f95cf6761dfcd7c8df88215c0c74",
+    "tests/test_report_results.py": "a2088a3cdd5aaa6dcc8483adcd610c43886a6d72d4dee51f4b2c9634731cc255",
+    "tests/test_study_training.py": "1d6a210ac3b14c63212aad625a66c2dda27ba5ca4f8fc88413600b2c7a528b68",
+    "train.py": "f803f010f56e5d6535692d262aceb362284f2b611d0b0e92668124042aafb3a2",
+    "training/__init__.py": "782c623256234da774398449dcb22b50356227a666f85a3a26e3cb6497287ffd",
+    "training/adv_train/__init__.py": "d429432dd2b7482065622383810940c7bedce6539f7f8b2f18207160b71e660e",
+    "training/adv_train/adv_mart.py": "b9391058be7927bbc06c5beeef6356f163ec30f3e40b929e755b680bd89c42e8",
+    "training/adv_train/adv_mart_bd.py": "e5fbaf55a442935095815f1533237f5c045a1da165f821556f3e77d940b248ad",
+    "training/adv_train/adv_mart_consistency.py": "652cf4b8b0f3f2e17a432ca3af492f6810cbf2e3b08a035c4ee0e16a2dfc91ee",
+    "training/adv_train/adv_trades.py": "e0614b8efb9f158fa247bed10f5936d06349b2897813b22840555eb0e984bba9",
+    "training/adv_train/adv_trades_consistency.py": "48d7256ce0114c28b14a4cbab072691f812ef94c081bc597a46257998e33ba2b",
+    "training/adv_train/adv_train.py": "5e3918a6f41cc9bbaa3baa3d451eb702b08947b730152e5f4a4c68d43508ab8f",
+    "training/adv_train/adv_train_bd.py": "032bb2980a8bde896c190b5129dede0f196663c4d1222c88893e51a35e5c9cc9",
+    "training/adv_train/adv_train_consistency.py": "8435c553f164f791f854a25eec3939bff2b091dbf463a7b4a9ed3c601e1ed834",
+    "training/train/__init__.py": "07932a7332f308e749798320d6986256724ac7b60e16e6491d8f977ca9bee043",
+    "training/train/ce.py": "497b6be53d2993483432667277ccd831166abfe4da95058acbb5d652fbdace6f",
+    "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "utils/utils.py": "89fab0aeca4ff78abba4b13248bc033f56fe126090c1672585f9996663720cd5"
+  },
+  "original_study_files_unchanged": true,
+  "cpu_test_log_sha256": "4642def93c458cb727f205918f94b4a6a488e7cbd6d11dedbe25802c6e5712f3",
+  "note": "Private account, host, paths, and scheduler identifiers omitted. All reported tests use the packaged Python sources identified here. Logs are retained privately."
+}

@@ -1,0 +1,2 @@
+# Plotting the recorded results does not require PyTorch or a GPU.
+matplotlib==3.10.8

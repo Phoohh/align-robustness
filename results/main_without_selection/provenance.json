@@ -1,0 +1,329 @@
+{
+  "checked_at_utc": "2026-09-25T11:12:09.955650+00:00",
+  "ours_records": 36,
+  "baseline_records": 108,
+  "expected_baseline_records": 216,
+  "evidence_counts": {
+    "archived_per_seed_table": 114,
+    "native_result_record": 3,
+    "training_and_full_aa_checked": 27
+  },
+  "sources": {
+    "r18_archive": {
+      "per_seed_sha256": "c190d4d035628ca76fdd20c494e40f87b8fe5a549a3186da58f728823a832744",
+      "manifest_sha256": "e348dbdefce8ca0615d009048e63d870d0aa27882b67986a0a99c660e5aefd25",
+      "record_count": 126,
+      "used_records": 114,
+      "policy": "Authoritative-source merge: 35 repaired cells and 91 original cells; supplied manifest checksum and duplicate backup agree."
+    },
+    "verified_native_candidates": [
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "cifar10",
+        "candidate": "w2c05",
+        "seed": 0,
+        "result_sha256": "03cd48d428d5dff40728f85f7368f46e32a270663c15279920bc9041d413ca06",
+        "aa_log_sha256": "1a6689e97b3b78c2b1f3f15d6a8ba3171472298ff84d171cf3c31f44cc0cf1e8",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "cifar10",
+        "candidate": "w2c05",
+        "seed": 2,
+        "result_sha256": "c1d4770e38e12be33806e7922a6566567b2c82086e1cbb5b6a3e9e09a014371a",
+        "aa_log_sha256": "7ded14b028fda42bba473b4ec26c207bd81745ecc9e7c6e6b85a498760258f04",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "cifar10",
+        "candidate": "w2c05",
+        "seed": 1,
+        "result_sha256": "8125905816fd81e28b27213325438d78365b9109a80310a9926ddb5878e42bab",
+        "aa_log_sha256": "1364a156317ca0b28a8d037b1aab11cd0770fea7a3b16e3620021041a1d25887",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "r18",
+        "norm": "L2",
+        "dataset": "cifar100",
+        "candidate": "2108",
+        "seed": 0,
+        "result_sha256": "44ec8ef05a801c407226325999eecca8d107485ac5e1e0e098061c9f1dc6386c",
+        "aa_log_sha256": "d972f100163242e553eb1eaa3a56758151843bbe233f2edcf030c98e70831418",
+        "epoch": 110,
+        "final_lr": 0.001
+      },
+      {
+        "arch": "r18",
+        "norm": "L2",
+        "dataset": "cifar100",
+        "candidate": "2108",
+        "seed": 2,
+        "result_sha256": "b8c66cd532cc4f6618da8a2f5ee5f5a2e2e92c39eee83cfd367e30c7237c2784",
+        "aa_log_sha256": "935f1d7e938a6cba4de0353d6e8d8dc897ac1323d8434cda185a32b659850698",
+        "epoch": 110,
+        "final_lr": 0.001
+      },
+      {
+        "arch": "r18",
+        "norm": "L2",
+        "dataset": "cifar100",
+        "candidate": "2108",
+        "seed": 1,
+        "result_sha256": "564867770a7578931b832c57aa30da20d3b4d6b6be2bd3303f5479d274e371a1",
+        "aa_log_sha256": "a2aad878eebfb87274366b0693a5f2cbd0270bea81091377cdc6cf0292a88719",
+        "epoch": 110,
+        "final_lr": 0.001
+      },
+      {
+        "arch": "wrn",
+        "norm": "L2",
+        "dataset": "cifar100",
+        "candidate": "n03",
+        "seed": 0,
+        "result_sha256": "421bbe967c447ca337e9786b1332a460a4eecb5bcd1a78892af4384981d11b97",
+        "aa_log_sha256": "52940b9386a0c6aaa88e80f236e9d2571088ba45b182d714b00b3755111217e9",
+        "epoch": 110,
+        "final_lr": 0.001
+      },
+      {
+        "arch": "wrn",
+        "norm": "L2",
+        "dataset": "cifar100",
+        "candidate": "n03",
+        "seed": 2,
+        "result_sha256": "c8697ee7108403e7f8cd41dd588ada403d4f88ef193c44cebccd5ae1b3785bb6",
+        "aa_log_sha256": "065ff4721221dc03d02b2ac193807848c3dd41ebb60c5be8d66e4a28665d847e",
+        "epoch": 110,
+        "final_lr": 0.001
+      },
+      {
+        "arch": "wrn",
+        "norm": "L2",
+        "dataset": "cifar100",
+        "candidate": "n03",
+        "seed": 1,
+        "result_sha256": "e686db3a4f3cac8a710ed60c34a0cc565c2a03efa51029062a0026f915e754a6",
+        "aa_log_sha256": "524e05d48262c734f183b54eb6e4d750b31e7c6ce0cd626fb680fa17774397e8",
+        "epoch": 110,
+        "final_lr": 0.001
+      },
+      {
+        "arch": "r18",
+        "norm": "Linf",
+        "dataset": "cifar100",
+        "candidate": "e15ri09",
+        "seed": 0,
+        "result_sha256": "040c94c6ba3c790c0b886ef150b61c620a7fec56407f5ba44883e33b2a64868d",
+        "aa_log_sha256": "7890825d353e858101983a64b3df601d724cba4f9f635030a4995bb4ca61e9ae",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "r18",
+        "norm": "Linf",
+        "dataset": "cifar100",
+        "candidate": "e15ri09",
+        "seed": 2,
+        "result_sha256": "a57516920e97e94dea8a02df282cd2d63e6da28f7dbab8a5b03a1f2cdd0a7add",
+        "aa_log_sha256": "5ee9cf788c443cd9ea57634c2adb52758c42d378880b2074c1b290990252e6e0",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "r18",
+        "norm": "Linf",
+        "dataset": "cifar100",
+        "candidate": "e15ri09",
+        "seed": 1,
+        "result_sha256": "b6fc1db0aa6c8fb236995cc6716864d051e2f88fb013a7917c4ffed368e7bb18",
+        "aa_log_sha256": "140bbc7fb152652fd9bed0f09680ec090ab8a60b0b5a1cf9ea2e82c8dc61e7e3",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "r18",
+        "norm": "L2",
+        "dataset": "tinyimagenet",
+        "candidate": "e15r211",
+        "seed": 0,
+        "result_sha256": "19eed503d1e208dd3d0e9e095258000cbe9ebe1c6e05845294abf8d202690f14",
+        "aa_log_sha256": "5b69e1e108fe57ac84a2e14b2f766a6795e50e94d25dea7b12dda7e73922f372",
+        "epoch": 110,
+        "final_lr": 0.0014000000000000002
+      },
+      {
+        "arch": "r18",
+        "norm": "L2",
+        "dataset": "tinyimagenet",
+        "candidate": "e15r211",
+        "seed": 2,
+        "result_sha256": "81313edb0fab4f0addccd549a6f144681d66bf070de9ce6e0e13f8257e13d69f",
+        "aa_log_sha256": "0bd51e55e7f0b34bf899c16f99ce67afe092ba7fa304748a89735760cf586771",
+        "epoch": 110,
+        "final_lr": 0.0014000000000000002
+      },
+      {
+        "arch": "r18",
+        "norm": "L2",
+        "dataset": "tinyimagenet",
+        "candidate": "e15r211",
+        "seed": 1,
+        "result_sha256": "5a19af2414f13a730145beb17975307f23d222746cea25a0bed2357d750a08f6",
+        "aa_log_sha256": "49c48d50f3c7cf8e3f9fd9339add2f7f3cef9132def32b1f1ad05f8e974d35f5",
+        "epoch": 110,
+        "final_lr": 0.0014000000000000002
+      },
+      {
+        "arch": "r18",
+        "norm": "Linf",
+        "dataset": "tinyimagenet",
+        "candidate": "e15rt05",
+        "seed": 0,
+        "result_sha256": "f86e597866d07ce7378dda3132c47e082dd30467c8b9425214f6e52cc1fa0b9e",
+        "aa_log_sha256": "6ef69a75f8701808871e897af4172c5174c6a83328bb1bb3fb3bab40d0fcac44",
+        "epoch": 110,
+        "final_lr": 0.00105
+      },
+      {
+        "arch": "r18",
+        "norm": "Linf",
+        "dataset": "tinyimagenet",
+        "candidate": "e15rt05",
+        "seed": 2,
+        "result_sha256": "56fca170b7a36b66a2210e906e919793242911fb04b2fcd26d4e89816c75ee50",
+        "aa_log_sha256": "29a4e2d2bbe126f077e28964469aac11cfcdd3289cbfa7fa7817aff8e5798421",
+        "epoch": 110,
+        "final_lr": 0.00105
+      },
+      {
+        "arch": "r18",
+        "norm": "Linf",
+        "dataset": "tinyimagenet",
+        "candidate": "e15rt05",
+        "seed": 1,
+        "result_sha256": "b678871e311aed260a1a4f52597224bc364e1bf388c5926b3829cc6242d98f70",
+        "aa_log_sha256": "c9bc0bd9dce744682a44486540d5cb834c454c4e936ca77341b5e37a9b0feeb6",
+        "epoch": 110,
+        "final_lr": 0.00105
+      },
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "cifar100",
+        "candidate": "e15wi08",
+        "seed": 0,
+        "result_sha256": "5fac58dfaca6a44c754e245e4bdbc9f8b978c492365be5c991a143dc04fc61c0",
+        "aa_log_sha256": "73329345f1663df4a6526fd4397d14a5de1dc1dfc7495ef604f6f6e6ca7a7bbc",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "cifar100",
+        "candidate": "e15wi08",
+        "seed": 2,
+        "result_sha256": "99b80bd7ad43fd23a387072db3067656a55cd1917835347ddd702d3b03c0b92d",
+        "aa_log_sha256": "20a0155711b6af5bc0f4666ef64fce7e1976aac50417e8f88cabe32976f0c8e2",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "cifar100",
+        "candidate": "e15wi08",
+        "seed": 1,
+        "result_sha256": "e0232e1b17f2c31b2eacb21d1319afd16c26f488a324f9a1811855cb125528af",
+        "aa_log_sha256": "00588d63232c7668ac2764cc551595660c6492a4e224189f76b34183c48c2429",
+        "epoch": 110,
+        "final_lr": 0.00125
+      },
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "tinyimagenet",
+        "candidate": "e15wt10",
+        "seed": 0,
+        "result_sha256": "1be25d4308d6f5055eacf3dffde3b47304e6af341ec4649f1df3f95c7e5a97f3",
+        "aa_log_sha256": "a31f56bc14c207a47f28fbdcd3723f5a879979a8b02635b01220d56c7f6b28f7",
+        "epoch": 110,
+        "final_lr": 0.0006500000000000001
+      },
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "tinyimagenet",
+        "candidate": "e15wt10",
+        "seed": 2,
+        "result_sha256": "a0d457176ccf6daba1d6580a2e6a06262ec02b4c71499501b9b7269ef662226f",
+        "aa_log_sha256": "65fef2744567c1972f7f6e181c82a8359c442466157ec659dd3a127a85653275",
+        "epoch": 110,
+        "final_lr": 0.0006500000000000001
+      },
+      {
+        "arch": "wrn",
+        "norm": "Linf",
+        "dataset": "tinyimagenet",
+        "candidate": "e15wt10",
+        "seed": 1,
+        "result_sha256": "da2b251af4225f93732775b910bdad6cd19b94744841c475945b5f2b5fa35e17",
+        "aa_log_sha256": "086be069c68960b362b45a5212e07853f1ef9b491d797bf3f42b197e2f95fbff",
+        "epoch": 110,
+        "final_lr": 0.0006500000000000001
+      },
+      {
+        "arch": "wrn",
+        "norm": "L2",
+        "dataset": "tinyimagenet",
+        "candidate": "e15w207",
+        "seed": 0,
+        "result_sha256": "857fda0138088ba21467ffa4356dfc5dcd57fb2b20614ba2661e99583f3f1fc5",
+        "aa_log_sha256": "8c9dc0854dc9018dea3c22dae3563765c68588e1ce88281d65d2cc35636745ea",
+        "epoch": 110,
+        "final_lr": 0.0014000000000000002
+      },
+      {
+        "arch": "wrn",
+        "norm": "L2",
+        "dataset": "tinyimagenet",
+        "candidate": "e15w207",
+        "seed": 2,
+        "result_sha256": "866e2a9c1a12e80eae9b98e171fbdd1a13ac869967414e9d542f75dd540e0c2f",
+        "aa_log_sha256": "517075b29f8065a3b05afdc216693b09ef16c8a9d14c64dce7d5bf4b056fad39",
+        "epoch": 110,
+        "final_lr": 0.0014000000000000002
+      },
+      {
+        "arch": "wrn",
+        "norm": "L2",
+        "dataset": "tinyimagenet",
+        "candidate": "e15w207",
+        "seed": 1,
+        "result_sha256": "4a4012ff0c34cee945224e56110aa32952515b15f71263b03566846c16b8be18",
+        "aa_log_sha256": "944a14bf3d67f143af0ba18034e533f4681e587c2d47d4ca52cc924c577287af",
+        "epoch": 110,
+        "final_lr": 0.0014000000000000002
+      }
+    ],
+    "r18_followup": "../../results/r18_tinyimagenet_linf_followup/provenance.json",
+    "wrn_followup": "../../results/wrn_tinyimagenet_linf_followup/provenance.json"
+  },
+  "main_csv_sha256": "09fa9ff6c362edf190889e76a9d789dc5c71547d3bdbf78a5a3e6951908598a4",
+  "historical_environment_reproduced": false,
+  "limitations": [
+    "Archived table records are not fresh log verification.",
+    "Three WRN L2 CIFAR-10 Ours records have native result metadata but no recovered full raw logs.",
+    "WRN baseline records remain unavailable; the separate reported aggregate file must not be treated as reconstructed per-seed evidence.",
+    "Native training outcomes are not a new 110-epoch accuracy reproduction with the portable package."
+  ]
+}

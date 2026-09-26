@@ -1,0 +1,4 @@
+candidate,seed,clean,aa,mean,test_size,autoattack
+e15wt03,0,56.05,19.57,37.81,10000,standard_full_APGD-CE_APGD-T_FAB-T_SQUARE
+e15wt03,1,55.9,19.35,37.625,10000,standard_full_APGD-CE_APGD-T_FAB-T_SQUARE
+e15wt03,2,55.35,19.63,37.49,10000,standard_full_APGD-CE_APGD-T_FAB-T_SQUARE

@@ -1,0 +1,271 @@
+{
+  "record_count": 9,
+  "new_seed_count": 3,
+  "reused_seed_count": 6,
+  "checked_at_utc": "2026-09-23T10:33:24.163613+00:00",
+  "per_seed_csv_sha256": "d589389de12b6c103941f1f70ba8ebeb01920fd3feb3702044405144b582c939",
+  "private_paths_removed": true,
+  "raw_logs_and_checkpoints_included": false,
+  "checks": [
+    "result identity and finite accuracies",
+    "all four standard AutoAttack stages logged",
+    "full 10000-image test set",
+    "identical 5000-image balanced subset at each seed across methods",
+    "new runs: completed epoch 110 and final learning rate 0.001",
+    "reused accuracies equal the original study CSV"
+  ],
+  "records": [
+    {
+      "key": "raat_p10_rna_s0",
+      "source_result_sha256": "623f1ca98fb33f923174d54acf7a5e3df54d74d82d06c4316f7e4bd504b78886",
+      "autoattack_log_sha256": "b52342d980193b0a2cc9f343417d3585da568b3370fd715c3bc7ebbe88c06ce1",
+      "subset": {
+        "indices_sha256": "850d3ee73e7aefe67a6709bd8d7769179d5e701cd92eebfdd5e5657fc5d34c74",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 0,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": false
+    },
+    {
+      "key": "raat_p10_rna_s1",
+      "source_result_sha256": "341dd9d48db232045176cf0c094b8bd97a80e5e4b7905c76cef331cb135b284e",
+      "autoattack_log_sha256": "1a8fa4e66442b610170c6fdc38f0c910946bc69ca9f1c73266266802e37e41a1",
+      "subset": {
+        "indices_sha256": "3e04d656b9418e5b2108290d6ef58d8cee316ba9319770eb0d646582ba8e385f",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 1,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": false
+    },
+    {
+      "key": "raat_p10_rna_s2",
+      "source_result_sha256": "52045ffdfac00403abdb0a9478a5f7ecdba70092b97b7367a6584dc418e5150a",
+      "autoattack_log_sha256": "5fdd6d8a407b892651172c643a19e5413d235d09f796a5617f10a73efc24eb50",
+      "subset": {
+        "indices_sha256": "712486319fe3da052a1293756b83fcefd33b4cf2a826257871a758580a40fa16",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 2,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": false
+    },
+    {
+      "key": "align_p10_r0p002_s0",
+      "source_result_sha256": "9c84f37f9c43c2c86110814ec27aed6e62f003be8dde968730ad660aaef4fa74",
+      "autoattack_log_sha256": "8bc5975edb0ea2b91b9f0b3b0ddbec876cd19a3af8f30e2804ff420d4a84eb71",
+      "subset": {
+        "indices_sha256": "850d3ee73e7aefe67a6709bd8d7769179d5e701cd92eebfdd5e5657fc5d34c74",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 0,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": false
+    },
+    {
+      "key": "align_p10_r0p002_s1",
+      "source_result_sha256": "a9fd6b981828bc5661635f8d5d52575371dfaca84963a5b7d3e23b92222bcf36",
+      "autoattack_log_sha256": "01511de34b182d26267b711325ebfe2e1b198177414f769efd99516cd3dca6f6",
+      "subset": {
+        "indices_sha256": "3e04d656b9418e5b2108290d6ef58d8cee316ba9319770eb0d646582ba8e385f",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 1,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": false
+    },
+    {
+      "key": "align_p10_r0p002_s2",
+      "source_result_sha256": "b3aefca6dc57dc57c2dacf5bff094d25f52c85fd51c7cce5d5d7336c35b659e6",
+      "autoattack_log_sha256": "4df7fa89f322d9b18b7197956c7760d62873cca4e72b052f5d573f402a2c8cf1",
+      "subset": {
+        "indices_sha256": "712486319fe3da052a1293756b83fcefd33b4cf2a826257871a758580a40fa16",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 2,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": false
+    },
+    {
+      "key": "align_p10_r0p001_s0",
+      "source_result_sha256": "541752f3692e8ca5108946638ff3e522ad02e041cb2cabf42160bcf66c7f72e4",
+      "autoattack_log_sha256": "521d8e09546060f05e2904f0726895b379f22a68ed8d8f15ccce194f166b5866",
+      "subset": {
+        "indices_sha256": "850d3ee73e7aefe67a6709bd8d7769179d5e701cd92eebfdd5e5657fc5d34c74",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 0,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": true,
+      "training": {
+        "epoch": 110,
+        "pgd_best_epoch": 101,
+        "final_lr": 0.001,
+        "sha256": "1843ae58c4842d4dbe4e37aa3c36e4ded5adc828e554442e18fba40b0a289e65",
+        "method": "align",
+        "rho": "0.001",
+        "selection": "without"
+      }
+    },
+    {
+      "key": "align_p10_r0p001_s1",
+      "source_result_sha256": "c7c7e82660f1dd36a96038342d61efed2b75eaf7f541765f36cd5e8db4c02838",
+      "autoattack_log_sha256": "9ba625c93bdae54fcf020b96f28664b7667ecbdcc35bb8e9a7b3157675ba011a",
+      "subset": {
+        "indices_sha256": "3e04d656b9418e5b2108290d6ef58d8cee316ba9319770eb0d646582ba8e385f",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 1,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": true,
+      "training": {
+        "epoch": 110,
+        "pgd_best_epoch": 83,
+        "final_lr": 0.001,
+        "sha256": "2ebb31a3c940e139fefc7919ceca1b4140e39c76a32203c63447b731c87415df",
+        "method": "align",
+        "rho": "0.001",
+        "selection": "without"
+      }
+    },
+    {
+      "key": "align_p10_r0p001_s2",
+      "source_result_sha256": "56f3afb47dd644f37c37b88cb648aaf56156d6a6fb342a045a36db1f4f8e2bb4",
+      "autoattack_log_sha256": "18de25aee249d827bea210bde6a0e50374fb41e886ed06afee28694b15d4bf09",
+      "subset": {
+        "indices_sha256": "712486319fe3da052a1293756b83fcefd33b4cf2a826257871a758580a40fa16",
+        "per_class": {
+          "0": 500,
+          "1": 500,
+          "2": 500,
+          "3": 500,
+          "4": 500,
+          "5": 500,
+          "6": 500,
+          "7": 500,
+          "8": 500,
+          "9": 500
+        },
+        "percent": 10,
+        "seed": 2,
+        "test_size": 10000,
+        "train_size": 5000
+      },
+      "new_run": true,
+      "training": {
+        "epoch": 110,
+        "pgd_best_epoch": 67,
+        "final_lr": 0.001,
+        "sha256": "545dd516af8d3ee46d8d458421ea91aaaea15b6cc24b86ce7d5d18f784d0cf3c",
+        "method": "align",
+        "rho": "0.001",
+        "selection": "without"
+      }
+    }
+  ]
+}
