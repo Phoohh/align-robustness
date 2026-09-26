@@ -36,6 +36,9 @@ and data consistency, not the measured accuracies of a newly trained model.
 The main-comparison command should print
 `OURS_SEEDS=36/36 BASELINE_SEEDS=108/216 COMPLETE_GROUPS=48/84`.
 Its coverage CSV leaves missing WRN baseline seed groups explicit.
+The comparison displays all 84 rows: 48 from seed records and 36 from existing
+WRN baseline aggregates, distinguished in the Source column. Displaying these
+archived results does not fill the missing per-seed evidence or require retraining.
 
 To render both figures as well, install the plotting dependencies:
 
@@ -54,7 +57,7 @@ both methods' Clean, AA, arithmetic Mean, and geometric G.
 |---|---|---|
 | CIFAR-10 rho plot and dataset-size table | All 42 unique measured seed records, recorded protocol, CSV/Markdown aggregation, and figure generation | Historical measurements, not newly certified training results in the packaged environment |
 | Ours: 12 architecture/dataset/norm settings | Full-data training, resume, PGD-best checkpoint selection, full standard AA, and all 36 recorded seeds | Native evidence varies from recovered tables to checked training logs; no new full training reproduction with the portable package |
-| Main baselines | 108 ResNet-18 seed records and separately archived WRN reported aggregates | 108 WRN baseline seed records remain unavailable |
+| Main baselines | 108 ResNet-18 seed records and 36 WRN reported aggregate rows, all displayed with source labels | 108 WRN baseline seed records have not been recovered; aggregate values retain their reported precision |
 | Dataset-size training at 10%, 20%, and 50% | `studies/run_study.py`, the native nested subset algorithm, index checksums, and full test-set evaluation | No new 110-epoch accuracy reproduction of the portable entry point is claimed |
 | RAAT comparison | Recorded results and a distinct `raat_recorded` training option using the audited baseline path | Targets the measured native snapshot; no claim of identity with every upstream RAAT revision |
 | 10% rho follow-up | Three new measured seeds at rho=0.001, compared with six reused reference seeds | Follow-up after observing the original result; Mean and G still trail RAAT |
@@ -135,6 +138,11 @@ small training epochs, including resume, with four examples per epoch and a
 finite saved checkpoint. This is a workflow check, not an accuracy reproduction.
 Exact versions, source checksums, and limitations are recorded in
 [validation_reproduction_20260923.json](validation_reproduction_20260923.json).
+
+The subsequent [comparison-display update](validation_main_20260927.json) passed
+all six main-result tests. It reuses the recorded WRN aggregates and leaves
+every measurement CSV, training configuration, and original figure unchanged.
+No training or AutoAttack evaluation was added for that update.
 
 The suite contains configuration checks, recorded-result checks, numerical
 checks, and short synthetic-data workflow checks. In the documented Python

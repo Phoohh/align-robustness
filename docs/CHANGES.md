@@ -1,5 +1,14 @@
 # Packaging changes
 
+## Display existing WRN baseline aggregates
+
+- Fill the main comparison's 36 WRN baseline rows with their existing reported
+  Clean, AA, Mean, SD, and G values. Label them as archived rounded aggregates;
+  the other 48 rows remain recomputed from measured seeds.
+- Preserve all per-seed CSVs, the 48-row seed-derived summary, and the coverage
+  report. The 108 unrecovered WRN baseline seed records remain explicitly missing.
+  No new training or evaluation is performed for this presentation update.
+
 ## Recovered main data and completed ResNet-18 follow-up
 
 - Added all 36 current Ours seed records, 108 ResNet-18 baseline records,

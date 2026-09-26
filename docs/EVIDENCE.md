@@ -52,8 +52,9 @@ measurements remain in the [follow-up](../results/r18_tinyimagenet_linf_followup
 
 The [main catalog](../results/main_without_selection/README.md) now contains
 36/36 Ours and 108/216 baseline seed measurements. The missing baseline records
-are all WRN; their separately archived reported aggregates are not converted
-into seed measurements. The recovered ResNet-18 reference table includes the
+are all WRN; their existing reported aggregates are displayed in the comparison
+with a source label, without conversion into seed measurements. Unrecovered
+records do not imply unperformed experiments. The recovered ResNet-18 reference table includes the
 previously missing L2 CIFAR-10 Ours seeds. Source checksums and evidence levels
 are recorded without personal paths. Full training logs were checked for 27 of
 the selected Ours records; six are supported by the authoritative archived table

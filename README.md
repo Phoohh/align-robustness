@@ -183,8 +183,9 @@ python studies/reproduce_main_results.py --output-dir ./runs/recomputed-main
 ```
 
 All 36 Ours seed records are included. ResNet-18 baseline records cover 108/108;
-WRN baseline per-seed records remain missing, with only their reported rounded
-aggregates archived separately. [Coverage and evidence levels](results/main_without_selection/README.md)
+The comparison displays all 84 method/setting rows, using explicitly labeled
+archived aggregates for the 36 WRN baseline rows whose per-seed records have
+not been recovered. [Coverage and evidence levels](results/main_without_selection/README.md)
 distinguish recovered tables, result metadata, and verified native training logs.
 
 For clean accuracy C and AutoAttack accuracy R (both in percent):
@@ -226,6 +227,9 @@ passed all 20 tests then present and verified the native subset and baseline pat
 The [main-result update checks](docs/validation_main_20260925.json) passed 16 tests
 locally, including three new result-integrity checks; seven PyTorch-dependent
 tests were skipped in that environment. Training kernels are unchanged.
+The later [comparison-display checks](docs/validation_main_20260927.json) passed
+six relevant tests and verified all 84 displayed rows. They added no training
+or AutoAttack evaluations.
 The earlier local integration checks, including dependency limitations, are in
 [docs/validation_local_20260922.json](docs/validation_local_20260922.json).
 [docs/validation_report_update.json](docs/validation_report_update.json) records

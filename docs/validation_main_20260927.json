@@ -1,0 +1,42 @@
+{
+  "checked_at_utc": "2026-09-26T16:03:22.162031+00:00",
+  "python": "3.12.14",
+  "scope": "Display existing recorded aggregates without adding measurements or training.",
+  "tests": {
+    "file": "tests/test_main_results.py",
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0
+  },
+  "comparison_rows": {
+    "total": 84,
+    "recomputed_from_seeds": 48,
+    "archived_rounded_aggregates": 36
+  },
+  "seed_records": {
+    "ours": 36,
+    "baseline": 108,
+    "unrecovered_wrn_baseline": 108
+  },
+  "archived_G": "Uses recorded reported_G, rounded only for display; no reconstruction from rounded Clean/AA.",
+  "csv_summaries_and_coverage": "Unchanged and byte-identical after regeneration.",
+  "all_original_figures_and_measurements_unchanged": true,
+  "all_training_configs_and_kernels_unchanged": true,
+  "new_training_runs": 0,
+  "new_autoattack_evaluations": 0,
+  "anonymous_identifier_scan": "passed",
+  "source_sha256": {
+    "studies/reproduce_main_results.py": "8523556191e901d8fcecdd8b6e3ef7fe9997e3a5344d1138b84584b65a9fc26d",
+    "tests/test_main_results.py": "9e6d88ce3902ca947786fa9efae9e5986bf9a7b60773fe8624cd7ee64695b584",
+    "results/main_without_selection/per_seed.csv": "09fa9ff6c362edf190889e76a9d789dc5c71547d3bdbf78a5a3e6951908598a4",
+    "results/main_without_selection/wrn_baseline_reported_aggregates.csv": "612a4e03eb6c4314b2987bc202466a0a2bd7ce0871324bf24d02812fe669e34e",
+    "results/main_without_selection/summary.csv": "3f61eeee3ebf4f57cccd312b87ee06c12e167b126748e3fc47b33d966a36b2b4",
+    "results/main_without_selection/coverage.csv": "19c670f9a4439bc29b131622e47ca25eeb73576ae11f65b79a6cb81638efb989",
+    "results/main_without_selection/comparison.md": "42cfd80b62b78f10e9855adc41763189efd4543ce9681a9a1a86227890e103de"
+  },
+  "limitations": [
+    "108 WRN baseline seed records have not been recovered; their existing aggregate results are retained.",
+    "Source coverage does not imply that unavailable seed records were never measured.",
+    "GPU and full-training tests were not rerun for this presentation-only change."
+  ]
+}

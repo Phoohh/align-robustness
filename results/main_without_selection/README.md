@@ -1,14 +1,21 @@
 # Main results and source coverage
 
 [Main comparison](comparison.md) · [144 per-seed measurements](per_seed.csv) ·
-[Unrounded summaries](summary.csv) · [Coverage by method and setting](coverage.csv)
+[Summaries recomputed from seeds](summary.csv) · [Seed-record coverage](coverage.csv)
 
 The released Ours configurations now have **36/36 measured seed records** across
 all 12 settings. Ours always means Align-only without alignment-sample selection.
-The six ResNet-18 baselines have **108/108 records**. The six WRN baselines still
-lack their **108 per-seed records** in this artifact. Their historical
-[reported aggregates](wrn_baseline_reported_aggregates.csv) are retained separately.
-Missing measurements appear as N/A in the recomputed comparison, never zero.
+The six ResNet-18 baselines have **108/108 records**. The six WRN baselines have
+36 existing [reported aggregate rows](wrn_baseline_reported_aggregates.csv),
+although their **108 per-seed records** have not been recovered for this artifact.
+This is a gap in the available records, not a claim that those experiments
+were never run.
+
+The main comparison displays all **84 method/setting rows**. Its Source column
+distinguishes the 48 groups recomputed from seeds from the 36 WRN baseline
+groups shown using their archived rounded aggregates. No training or evaluation
+was added to fill this display. `summary.csv` retains only seed-derived statistics;
+`coverage.csv` continues to identify the missing WRN baseline seed records.
 
 Recompute the comparison, coverage, and statistics without a GPU or dependencies:
 
@@ -53,8 +60,10 @@ an invented SD. The separately named per-seed geometric mean and SD are also
 included in `summary.csv`. Precision is limited by the recorded measurements.
 
 The WRN baseline archive preserves the reported rounded Clean/AA/Mean and SD,
-plus `reported_G`. It is not used to reconstruct seeds or recompute unrounded
-baseline G. Comparisons to these archived thresholds retain that limitation.
+plus `reported_G`. The comparison displays these existing values without
+reconstructing seeds or recomputing unrounded baseline G. Comparisons to these
+archived thresholds retain that precision limitation. A recovered seed group
+takes precedence over an archived aggregate in the display.
 
 The [WRN Tiny-ImageNet follow-up](../wrn_tinyimagenet_linf_followup/README.md)
 selects `e15wt03`. The [ResNet-18 Tiny-ImageNet follow-up](../r18_tinyimagenet_linf_followup/README.md)

@@ -118,8 +118,11 @@ The released configuration selects the improved candidate while retaining the
 
 The [main catalog](../results/main_without_selection/README.md) includes all
 36 selected Ours seeds and 108 ResNet-18 baseline seeds, with statistics computed
-from the recorded per-seed accuracies. The remaining 108 WRN baseline seeds are
-unavailable; their reported rounded aggregates are archived separately.
+from the recorded per-seed accuracies. The existing WRN baseline aggregates are
+also displayed in the full 84-row comparison, with a distinct source label.
+Their 108 original seed records have not been recovered for this artifact;
+this does not mean the experiments were not run. The archived aggregates
+retain their reported precision and are not converted into seed measurements.
 Source evidence ranges from recovered authoritative tables and result metadata
 to checked native training and full-AA logs, as labeled for every record.
 
