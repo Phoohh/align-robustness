@@ -100,6 +100,8 @@ def parse_args(default=False):
                         help='Fixed split seed, separate from the model-training seed')
     parser.add_argument('--selection_lock_sha256', default=None,
                         help='Validated configuration-lock digest required by final refits')
+    parser.add_argument('--max_epochs_this_run', type=int, default=None,
+                        help='Stop at a committed epoch boundary; v2 only, total epochs unchanged')
 
     if default:
         return parser.parse_args('')  # empty string

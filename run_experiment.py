@@ -35,11 +35,15 @@ def main(argv=None):
     p.add_argument('--dry-run', action='store_true', help='Print commands without importing PyTorch or running jobs')
     p.add_argument('--selection-lock', type=Path,
                    help='Validation-only decision required for a version 2 full-data final refit')
+    p.add_argument('--max-epochs-this-run', type=int,
+                   help='Safely segment v2 training; does not change the configured total epochs')
     a = p.parse_args(argv)
     if a.num_workers < 0 or any(s < 0 for s in a.seeds) or len(set(a.seeds)) != len(a.seeds):
         p.error('Workers/seeds must be nonnegative and seeds must be distinct')
     c = load_config(a.config)
     v2 = c['schema_version'] == 2
+    if a.max_epochs_this_run is not None and (not v2 or a.max_epochs_this_run <= 0):
+        p.error('Epoch segmentation requires a v2 configuration and a positive segment length')
     final = v2 and c['protocol']['stage'] == 'final'
     lock_digest = None
     if final:
@@ -58,6 +62,8 @@ def main(argv=None):
         env.update(environment(c))
         env.update(PYTHONHASHSEED=str(seed), PYTHONUNBUFFERED='1')
         train_cmd, eval_cmd = commands_for(c, a.config, seed, a.data_root, out, a.num_workers)
+        if a.max_epochs_this_run is not None:
+            train_cmd += ['--max_epochs_this_run', str(a.max_epochs_this_run)]
         if final:
             train_cmd += ['--selection_lock_sha256', lock_digest]
             eval_cmd += ['--selection-lock', str(a.selection_lock.resolve())]
@@ -125,6 +131,19 @@ def main(argv=None):
                     train_cmd += ['--resume_path', str(out)]
                 print(shlex.join(train_cmd), flush=True)
                 subprocess.run(train_cmd, cwd=root, env=env, check=True)
+                if not (out / 'TRAIN_COMPLETE.json').exists():
+                    if a.max_epochs_this_run is None:
+                        raise RuntimeError(f'Training returned without a completion marker: {out}')
+                    segment = json.loads((out / 'SEGMENT_COMPLETE.json').read_text())
+                    state_path = out / 'resume_state.pt'
+                    if (not 0 < segment.get('epoch', 0) < c['training']['epochs']
+                            or segment.get('total_epochs') != c['training']['epochs']
+                            or segment.get('next_epoch') != segment['epoch'] + 1
+                            or segment.get('selection_lock_sha256') != lock_digest
+                            or segment.get('resume_sha256') != hashlib.sha256(state_path.read_bytes()).hexdigest()):
+                        raise RuntimeError(f'Invalid segment completion marker: {out}')
+                    print(f'SEGMENT_SAVED_NO_TEST={out}', flush=True)
+                    continue
             if not v2 or final:
                 print(shlex.join(eval_cmd), flush=True)
                 subprocess.run(eval_cmd, cwd=root, env=env, check=True)

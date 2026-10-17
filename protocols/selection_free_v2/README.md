@@ -71,6 +71,28 @@ Both stages resume only within their own configuration-bound output directories.
 Archived checkpoints cannot be reused as new-protocol training runs. The final
 driver binds the validation lock to training completion and final evaluation.
 
+### Epoch-boundary segments for scheduler time limits
+
+For a long v2 run, add `--max-epochs-this-run 30 --resume` to the same
+`run_experiment.py` command on each allocation. The configured schedule remains
+110 epochs, including its learning-rate milestones. Each invocation continues
+at the next committed epoch; a partial segment never launches AutoAttack or
+writes `TRAIN_COMPLETE.json`.
+
+New v2 runs atomically save model, optimizer, scheduler, selected development
+exports, split/configuration identity, and Python/NumPy/Torch/CUDA RNG states in
+`resume_state.pt`. This bundle is authoritative if older individual exports were
+interrupted during writing. Restore requires the same configuration, workers,
+runtime versions, and numerical-policy flags. Old checkpoints without this
+bundle cannot enter the segmented path. Restore occurs after initialization
+and before creating the next epoch's data iterator; workers are not persistent.
+
+RNG restoration does not make nondeterministic GPU operations deterministic.
+Continuation tests compare sample augmentation, attack randomness, model and
+BatchNorm state, SGD momentum, and scheduler state, including AWP startup and
+the learning-rate milestones. GPU equality checks use an explicitly
+deterministic diagnostic environment; they are not accuracy experiments.
+
 ## Comparisons and remaining experiments
 
 The required ablation crosses weight perturbation off/on with input attacks

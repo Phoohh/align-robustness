@@ -215,6 +215,7 @@ class TrainingSelectionTests(unittest.TestCase):
         evaluations, saved_best = [], []
         args = SimpleNamespace(mode='adv_train', output_dir=folder, resume_path=None, epochs=epochs,
                                augment_type='base', error_step=1, save_step=25,
+                               max_epochs_this_run=None,
                                experiment_protocol='selection_free_v2', protocol_stage='final' if final else 'development',
                                selection_lock_sha256='a' * 64 if final else None,
                                validation_split={'role': 'final_refit' if final else 'training_holdout_validation'})
@@ -248,7 +249,7 @@ class TrainingSelectionTests(unittest.TestCase):
 
         common_train = ModuleType('common.train')
         for key, value in dict(P=args, selection_free_v2=True, final_refit=final, resume=False,
-                               start_epoch=1, model=Model(), criterion=None,
+                               start_epoch=1, resume_rng_state=None, model=Model(), criterion=None,
                                optimizer=SimpleNamespace(state_dict=lambda: {}), scheduler=None,
                                train_loader=object(), selection_loader=selection_loader,
                                adversary=None, adversary_t=None, best=None if final else 100.,
@@ -256,11 +257,16 @@ class TrainingSelectionTests(unittest.TestCase):
             setattr(common_train, key, value)
         utilities = ModuleType('utils.utils')
         utilities.Logger = Logger; utilities.save_checkpoint = save; utilities.save_checkpoint_epoch = lambda *a: None
+        continuation = ModuleType('utils.resume_state')
+        continuation.FILENAME = 'resume_state.pt'
+        continuation.save_training_state = lambda *a: None
+        continuation.restore_rng = lambda *a: None
         evaluation = ModuleType('evals'); evaluation.test_classifier_adv = evaluate
         training = ModuleType('training.adv_train')
         training.setup = lambda *a: (lambda *a, **k: None, 'sentinel')
         with patch.dict(sys.modules, {'torch': ModuleType('torch'), 'common.train': common_train,
-                                    'utils.utils': utilities, 'evals': evaluation, 'training.adv_train': training}):
+                                    'utils.utils': utilities, 'utils.resume_state': continuation,
+                                    'evals': evaluation, 'training.adv_train': training}):
             runpy.run_path(str(ROOT / 'train.py'), run_name='__main__')
         return evaluations, saved_best, json.loads((Path(folder) / 'TRAIN_COMPLETE.json').read_text())
 

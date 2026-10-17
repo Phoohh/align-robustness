@@ -6,6 +6,7 @@ from experiment import atomic_json
 
 from utils.utils import Logger
 from utils.utils import save_checkpoint, save_checkpoint_epoch
+from utils.resume_state import save_training_state, restore_rng, FILENAME
 
 from common.train import *
 from evals import test_classifier_adv
@@ -29,8 +30,12 @@ if selection_free_v2:
     logger.log('CHECKPOINT_SELECTION=' + ('fixed_last_epoch; no validation/test evaluation' if final_refit
                                          else 'highest PGD accuracy on the held-out training validation split'))
 
-# Run experiments
-for epoch in range(start_epoch, P.epochs + 1):
+# Restore after all model/loader/logger initialization, before the next iterator.
+if resume_rng_state is not None:
+    restore_rng(resume_rng_state)
+stop_epoch = (P.epochs if P.max_epochs_this_run is None else
+              min(P.epochs, start_epoch + P.max_epochs_this_run - 1))
+for epoch in range(start_epoch, stop_epoch + 1):
     is_best = False
     logger.log_dirname(f"Epoch {epoch}")
     model.train()
@@ -66,7 +71,7 @@ for epoch in range(start_epoch, P.epochs + 1):
     save_states = model.state_dict()
     save_checkpoint(epoch, best, save_states, optimizer.state_dict(), logger.logdir, is_best)
     if selection_free_v2:
-        atomic_json(Path(logger.logdir) / 'checkpoint_selection.json', {
+        checkpoint_selection = {
             'experiment_protocol': P.experiment_protocol,
             'protocol_stage': P.protocol_stage,
             'criterion': 'fixed_last_epoch' if final_refit else 'validation_pgd_accuracy',
@@ -77,9 +82,24 @@ for epoch in range(start_epoch, P.epochs + 1):
             'last_completed_epoch': epoch,
             'validation_split': P.validation_split,
             'selection_lock_sha256': P.selection_lock_sha256,
-        })
+        }
+        atomic_json(Path(logger.logdir) / 'checkpoint_selection.json', checkpoint_selection)
     if epoch % P.save_step == 0:
         save_checkpoint_epoch(epoch, save_states, optimizer.state_dict(), logger.logdir)
+    if selection_free_v2:
+        save_training_state(P, model, optimizer, scheduler, checkpoint_selection, logger.logdir)
+
+if stop_epoch < P.epochs:
+    atomic_json(Path(logger.logdir) / 'SEGMENT_COMPLETE.json', {
+        'epoch': stop_epoch, 'next_epoch': stop_epoch + 1, 'total_epochs': P.epochs,
+        'resume_file': FILENAME,
+        'resume_sha256': hashlib.sha256((Path(logger.logdir) / FILENAME).read_bytes()).hexdigest(),
+        'selection_lock_sha256': P.selection_lock_sha256,
+        'experiment_protocol': P.experiment_protocol, 'protocol_stage': P.protocol_stage})
+    logger.log(f'SEGMENT_COMPLETE={stop_epoch}/{P.epochs}; final evaluation remains disabled')
+    logger.writer.close()
+    logger.log_file.close()
+    raise SystemExit(0)
 
 # AA is launched only after this marker and a finite selected checkpoint are present.
 if not (Path(logger.logdir) / 'best.model').is_file():

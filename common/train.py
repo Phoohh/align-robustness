@@ -11,10 +11,13 @@ from adv_lib.attack import attack_module
 import models.classifier as C
 from datasets import get_dataset, get_selection_free_datasets
 from utils.utils import load_checkpoint, set_random_seed
+from utils.resume_state import FILENAME, load_training_state, restore_exports
 
 P = parse_args()
 selection_free_v2 = P.experiment_protocol == 'selection_free_v2'
 final_refit = selection_free_v2 and P.protocol_stage == 'final'
+if P.max_epochs_this_run is not None and (not selection_free_v2 or P.max_epochs_this_run <= 0):
+    raise ValueError('Epoch segmentation requires selection_free_v2 and a positive segment length')
 if selection_free_v2:
     if P.study_percent is not None:
         raise ValueError('selection_free_v2 does not yet support study_percent')
@@ -70,16 +73,30 @@ model = C.get_classifier(P, n_classes=P.n_classes).to(device)
 optimizer, lr_decay_gamma = get_optimizer(P, model)
 scheduler = get_scheduler(P, optimizer, lr_decay_gamma)
 
+resume_rng_state = None
 if P.resume_path is not None:
     resume = True
-    model_state, optim_state, config = load_checkpoint(P.resume_path, mode='last')
+    exact = (load_training_state(P, P.resume_path)
+             if selection_free_v2 and (Path(P.resume_path) / FILENAME).is_file() else None)
+    if exact is not None:
+        model_state, optim_state = exact['model'], exact['optimizer']
+        config = {'epoch': exact['epoch'], 'best': exact['selection']['best_pgd_error']}
+        restore_exports(exact, P.resume_path)
+        resume_rng_state = exact['rng']
+    else:
+        if P.max_epochs_this_run is not None:
+            raise ValueError('Segmented continuation requires an atomic checkpoint with RNG state')
+        model_state, optim_state, config = load_checkpoint(P.resume_path, mode='last')
     if config['epoch'] > P.epochs:
         raise ValueError('Saved checkpoint exceeds the requested training schedule')
     model.load_state_dict(model_state, strict=not P.no_strict)
     optimizer.load_state_dict(optim_state)
     # Config stores the last completed epoch. Continue with the next epoch.
     start_epoch = config['epoch'] + 1
-    scheduler.step(config['epoch'])
+    if exact is not None:
+        scheduler.load_state_dict(exact['scheduler'])
+    else:
+        scheduler.step(config['epoch'])
     print(f'SCHEDULER_GLOBAL_EPOCH_RESTORED={config["epoch"]} LR={optimizer.param_groups[0]["lr"]:.8f}')
     best = config['best']
     best_epoch = None
