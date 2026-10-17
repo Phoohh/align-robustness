@@ -90,6 +90,16 @@ def parse_args(default=False):
     parser.add_argument('--num_workers', type=int, default=8)
     parser.add_argument('--study_percent', type=int, choices=(100, 50, 20, 10), default=None,
                         help='Class-balanced CIFAR-10 training fraction; omit for ordinary full-data training')
+    parser.add_argument('--experiment_protocol', choices=('legacy', 'selection_free_v2'), default='legacy',
+                        help='Keep historical reproduction or use a training-only validation holdout')
+    parser.add_argument('--protocol_stage', choices=('development', 'final'), default='development',
+                        help='Use validation for development, or fixed-last-epoch full-data refit')
+    parser.add_argument('--validation_fraction', type=float, default=0.1,
+                        help='Per-class fraction held out from training under selection_free_v2')
+    parser.add_argument('--validation_seed', type=int, default=2027,
+                        help='Fixed split seed, separate from the model-training seed')
+    parser.add_argument('--selection_lock_sha256', default=None,
+                        help='Validated configuration-lock digest required by final refits')
 
     if default:
         return parser.parse_args('')  # empty string

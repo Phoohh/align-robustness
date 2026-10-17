@@ -1,4 +1,5 @@
 import os
+import json
 
 import numpy as np
 import torch
@@ -126,6 +127,58 @@ def get_dataset(P, dataset, augment, download=True):
         from studies.subset import apply_subset
         train_set = apply_subset(P, dataset, train_set, test_set)
     return train_set, test_set, image_size, n_classes
+
+
+def get_selection_free_datasets(P, dataset, augment, download=True):
+    """Build train and held-out validation views of the training split only.
+
+    The public test split (or Tiny-ImageNet's official validation directory) is
+    intentionally never constructed here. It belongs only in final evaluation.
+    """
+    from torch.utils.data import Subset
+    from datasets.validation_split import prepare_split
+
+    if getattr(P, 'study_percent', None) is not None:
+        raise ValueError('selection_free_v2 does not yet support study_percent; the historical subset protocol must not include held-out validation examples')
+    data_path = getattr(P, 'data_root', DATA_PATH)
+    stage = getattr(P, 'protocol_stage', 'development')
+    if stage not in ('development', 'final'):
+        raise ValueError('Unknown selection_free_v2 protocol stage')
+    train_transform, validation_transform = get_transform(augment, dataset)
+    if P.consistency or P.BD:
+        train_transform = MultiDataTransform(train_transform)
+    if dataset in ('cifar10', 'cifar100'):
+        cls = datasets.CIFAR10 if dataset == 'cifar10' else datasets.CIFAR100
+        train_source = cls(data_path, train=True, download=download, transform=train_transform)
+        validation_source = (cls(data_path, train=True, download=download, transform=validation_transform)
+                             if stage == 'development' else None)
+        image_size = (3, 32, 32)
+        n_classes = 10 if dataset == 'cifar10' else 100
+        source_size = 50000
+    elif dataset == 'tinyimagenet':
+        train_dir = os.path.join(data_path, 'tiny-imagenet-200', 'train')
+        train_source = datasets.ImageFolder(train_dir, transform=train_transform)
+        validation_source = (datasets.ImageFolder(train_dir, transform=validation_transform)
+                             if stage == 'development' else None)
+        if validation_source is not None and train_source.class_to_idx != validation_source.class_to_idx:
+            raise ValueError('Training/validation class mappings differ')
+        image_size, n_classes, source_size = (3, 64, 64), 200, 100000
+    else:
+        raise ValueError('Unsupported selection_free_v2 dataset')
+    targets = [int(y) for y in train_source.targets]
+    if (len(targets) != source_size or set(targets) != set(range(n_classes))
+            or (validation_source is not None and targets != [int(y) for y in validation_source.targets])):
+        raise ValueError('Expected the complete training split with matching training/validation labels')
+    output_dir = getattr(P, 'resume_path', None) or getattr(P, 'output_dir', None)
+    train_indices, validation_indices, info = prepare_split(
+        dataset, targets, output_dir, getattr(P, 'validation_fraction', 0.1),
+        getattr(P, 'validation_seed', 2027), resume=bool(getattr(P, 'resume_path', None)), stage=stage)
+    P.validation_split = info
+    P.checkpoint_selection_role = info['role']
+    print('VALIDATION_SPLIT=' + json.dumps(info, sort_keys=True), flush=True)
+    return (Subset(train_source, train_indices),
+            Subset(validation_source, validation_indices) if validation_source is not None else None,
+            image_size, n_classes)
 
 
 def get_cifar_c(dataset):

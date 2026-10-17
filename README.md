@@ -1,5 +1,13 @@
 # Alignment-driven adversarial weight perturbation
 
+**Protocol revision:** the boundary-free SAAR implementation and validation-only
+selection workflow are in [selection-free v2](protocols/selection_free_v2/README.md).
+New-protocol results are pending. Existing tables, figures, and schema-1
+configurations below are historical: “without selection” there means without
+alignment-sample filtering, while classification boundary treatment remains.
+Their checkpoint selection used the official evaluation split. They must not
+be presented as results of the fully selection-free revision.
+
 Code for Align-only **without data selection** on CIFAR-10, CIFAR-100, and Tiny-ImageNet
 with ResNet-18 and WideResNet-28-10 under L∞ and L2 attacks.
 

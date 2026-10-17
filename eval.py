@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
-from experiment import atomic_json, attack_values, config_hash, load_config, metrics
+from experiment import atomic_json, attack_values, config_hash, load_config, metrics, selection_lock
 
 
 def main():
@@ -19,8 +19,17 @@ def main():
     p.add_argument('--output', required=True, type=Path)
     p.add_argument('--num-workers', type=int, default=4)
     p.add_argument('--require-training-complete', action='store_true')
+    p.add_argument('--selection-lock', type=Path)
     a = p.parse_args()
     c = load_config(a.config)
+    lock_digest = None
+    checkpoint_digest = None
+    if c['schema_version'] == 2:
+        if c['protocol']['stage'] != 'final' or a.selection_lock is None:
+            p.error('Version 2 development runs must not access the final test set')
+        _, lock_digest = selection_lock(a.selection_lock, c)
+        if not a.require_training_complete:
+            p.error('Version 2 evaluation requires --require-training-complete')
     if a.seed < 0 or a.num_workers < 0:
         p.error('Seed and workers must be nonnegative')
     if a.output.exists():
@@ -39,6 +48,22 @@ def main():
         provenance = json.loads(meta.read_text())
         if provenance.get('config_sha256') != config_hash(c) or provenance.get('seed') != a.seed:
             raise RuntimeError('Checkpoint/configuration provenance mismatch')
+        if lock_digest:
+            done = json.loads(marker.read_text())
+            if (provenance.get('selection_lock_sha256') != lock_digest
+                    or done.get('selection_lock_sha256') != lock_digest
+                    or done.get('best_epoch') != c['training']['epochs']
+                    or done.get('checkpoint_selection') != 'fixed_last_epoch'):
+                raise RuntimeError('Final checkpoint is not bound to the locked fixed-epoch protocol')
+            if a.checkpoint.name != 'best.model':
+                raise RuntimeError('Final evaluation requires the fixed-last-epoch best.model checkpoint')
+            checkpoint_hasher = hashlib.sha256()
+            with a.checkpoint.open('rb') as handle:
+                for chunk in iter(lambda: handle.read(1024 * 1024), b''):
+                    checkpoint_hasher.update(chunk)
+            checkpoint_digest = checkpoint_hasher.hexdigest()
+            if done.get('checkpoint_sha256') != checkpoint_digest:
+                raise RuntimeError('Final checkpoint content differs from its completed fixed-epoch record')
     import torch
     from torch.utils.data import DataLoader
     from torchvision import datasets, transforms
@@ -100,11 +125,12 @@ def main():
     aa = accuracy(x_adv)
     if aa > clean + 1e-8:
         raise RuntimeError('Robust accuracy unexpectedly exceeds clean accuracy')
-    with a.checkpoint.open('rb') as handle:
-        hasher = hashlib.sha256()
-        for chunk in iter(lambda: handle.read(1024 * 1024), b''):
-            hasher.update(chunk)
-        digest = hasher.hexdigest()
+    if checkpoint_digest is None:
+        with a.checkpoint.open('rb') as handle:
+            hasher = hashlib.sha256()
+            for chunk in iter(lambda: handle.read(1024 * 1024), b''):
+                hasher.update(chunk)
+            checkpoint_digest = hasher.hexdigest()
     versions = {}
     for package in ('torch', 'torchvision', 'numpy', 'advertorch', 'autoattack'):
         try:
@@ -113,13 +139,16 @@ def main():
             versions[package] = 'unknown'
     result = {'status': 'complete', 'experiment_id': c['experiment_id'], 'candidate': c['candidate'],
               'arch': c['arch'], 'norm': c['norm'], 'dataset': c['dataset'], 'selection': c['selection'],
-              'seed': a.seed, 'config_sha256': config_hash(c), 'checkpoint_sha256': digest,
+              'seed': a.seed, 'config_sha256': config_hash(c), 'checkpoint_sha256': checkpoint_digest,
               'test_examples': len(test), 'autoattack': c['evaluation'], 'attacks': expected,
               'metrics': metrics(clean, aa), 'versions': versions}
     if subset is not None:
         result['training_subset'] = {**c['training_subset'], **subset}
     if 'study_method' in c:
         result['study_method'] = c['study_method']
+    if lock_digest:
+        result['experiment_protocol'] = c['protocol']
+        result['selection_lock_sha256'] = lock_digest
     atomic_json(a.output, result)
     print(json.dumps(result, indent=2), flush=True)
 

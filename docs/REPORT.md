@@ -1,5 +1,10 @@
 # Alignment-driven adversarial weight perturbation
 
+This report describes the historical implementation and measurements. For the
+fully boundary-free revision with training-only validation and locked final
+refits, see [selection-free v2](../protocols/selection_free_v2/README.md). Existing
+numbers below are not new-protocol results.
+
 ## Scope
 
 This report describes the released Align-only **without data selection** method

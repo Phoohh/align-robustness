@@ -17,7 +17,8 @@ class Logger(object):
         logdir = output_dir or self._make_dir(fn)
         os.makedirs(logdir, exist_ok=True)
         # The driver creates only metadata before training. Never delete an existing run.
-        existing = set(os.listdir(logdir)) - {'experiment.json', '.run.lock', 'subset.json', 'train_indices.json'}
+        existing = set(os.listdir(logdir)) - {'experiment.json', '.run.lock', 'subset.json', 'train_indices.json',
+                                             'validation_split.json', 'validation_indices.json'}
         if existing and ask:
             raise FileExistsError(f'Run directory is not empty: {logdir}; use resume')
         self.set_dir(logdir)
