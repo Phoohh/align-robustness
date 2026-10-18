@@ -1,4 +1,29 @@
-# Selection-free SAAR: validation-controlled revision
+# Selection-free SAAR: fixed start0 revision
+
+The current SAAR campaign fixes adversarial **weight** perturbation start epoch
+to **0** in every setting, active from the first training epoch (numbered 1).
+Generate its 36 development candidates with:
+
+```bash
+python -m protocols.selection_free_v2.prepare_start0
+```
+
+Use `start0_configs/v2s0_*.json` and a separate output directory such as
+`runs/v2_start0`. The rho candidates remain `{0.001, 0.002, 0.005}`; LR=0.1,
+lambda=1, Beta shape=0.75, weight decay=0.0005 and temperature=0.5 are fixed.
+Select rho on the training holdout again, then refit seeds 0/1/2 from
+initialization for 110 epochs and run full AutoAttack. Start10 checkpoints and
+selection locks cannot authorize a start0 run. Official RAAT has no AWP and
+retains its existing configuration and results. No-AWP ablations can retain
+their original artifacts when all active training settings match; their
+original configuration and selection-lock identities must remain intact.
+
+The protocol details below also document the earlier start10 campaign. Its
+generator, configurations and commands are archived provenance. For current
+SAAR runs, use the new generator and identities above with the same validation,
+selection, final-training and evaluation procedures.
+
+## Archived start10 campaign
 
 This protocol is separate from the historical measurements in `results/` and
 the schema-1 configurations in `configs/without_selection/`. Those measurements

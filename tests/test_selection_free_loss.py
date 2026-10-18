@@ -121,6 +121,25 @@ class SelectionFreeLossTests(unittest.TestCase):
         for actual, reference in zip(model.parameters(), expected.parameters()):
             self.assertTrue(torch.equal(actual, reference))
 
+    def test_start0_uses_awp_on_first_epoch_and_disabled_awp_is_start_invariant(self):
+        initial = ToyModel()
+        start0, start10 = copy.deepcopy(initial), copy.deepcopy(initial)
+        self.run_batch(start0, torch.optim.SGD(start0.parameters(), lr=.05),
+                       AWP_TRAIN='1', AWP_START='0')
+        self.run_batch(start10, torch.optim.SGD(start10.parameters(), lr=.05),
+                       AWP_TRAIN='1', AWP_START='10')
+        self.assertEqual(len(start0.calls), 6)
+        self.assertEqual(len(start10.calls), 3)
+        self.assertTrue(any(not torch.equal(a, b) for a, b in
+                            zip(start0.parameters(), start10.parameters())))
+        disabled0, disabled10 = copy.deepcopy(initial), copy.deepcopy(initial)
+        self.run_batch(disabled0, torch.optim.SGD(disabled0.parameters(), lr=.05),
+                       AWP_TRAIN='1', AWP_OBJECTIVE='none', AWP_START='0')
+        self.run_batch(disabled10, torch.optim.SGD(disabled10.parameters(), lr=.05),
+                       AWP_TRAIN='1', AWP_OBJECTIVE='none', AWP_START='10')
+        for a, b in zip(disabled0.state_dict().values(), disabled10.state_dict().values()):
+            self.assertTrue(torch.equal(a, b))
+
     def test_awp_source_is_alignment_or_ce_and_weights_restore_exactly(self):
         for objective in ('align_only', 'ce_only'):
             with self.subTest(objective=objective):
