@@ -2,12 +2,19 @@ def setup(mode, P):
     fname = f'{P.dataset}_{P.model}_{mode}_{P.adv_method}_{P.distance}_{P.augment_type}'
 
     if mode == 'adv_train':
-        if P.consistency:
+        if P.BD and getattr(P, 'experiment_protocol', 'legacy') == 'selection_free_v2':
+            import os
+            if os.environ.get('SAAR_BASELINE', 'none') == 'raat_official':
+                from .raat_official import train
+            else:
+                from .saar import train
+            fname += '_selection_free_v2'
+        elif P.consistency:
             from .adv_train_consistency import train
             fname += f'_consistency_{P.lam}_temp_{P.T}'
         elif P.BD:
             from .adv_train_bd import train
-            fname += f'_BD'
+            fname += '_BD'
         else:
             from .adv_train import train
 

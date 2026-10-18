@@ -1,4 +1,5 @@
 import csv
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 import sys
 import tempfile
@@ -8,6 +9,28 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from studies.reproduce_figures import load_results, summarize
 from studies.reproduce_main_results import load_main, load_reported_aggregates, write_main
+
+
+def assert_csv_equal(test_case, actual_path, expected_path):
+    """Preserve CSV structure/text, allowing only sub-picounit numeric rounding."""
+    with actual_path.open(newline='') as handle:
+        actual = list(csv.reader(handle))
+    with expected_path.open(newline='') as handle:
+        expected = list(csv.reader(handle))
+    test_case.assertEqual(len(actual), len(expected), 'CSV row count differs')
+    test_case.assertEqual(actual[0], expected[0], 'CSV column names/order differ')
+    for row_number, (actual_row, expected_row) in enumerate(zip(actual[1:], expected[1:]), 2):
+        test_case.assertEqual(len(actual_row), len(expected_row),
+                              f'CSV field count differs on row {row_number}')
+        for column, actual_value, expected_value in zip(actual[0], actual_row, expected_row):
+            location = f'CSV row {row_number}, column {column}'
+            try:
+                actual_number, expected_number = Decimal(actual_value), Decimal(expected_value)
+            except InvalidOperation:
+                test_case.assertEqual(actual_value, expected_value, location)
+            else:
+                test_case.assertTrue(actual_number.is_finite() and expected_number.is_finite(), location)
+                test_case.assertLessEqual(abs(actual_number - expected_number), Decimal('1e-12'), location)
 
 
 class MainResultsTests(unittest.TestCase):
@@ -47,7 +70,10 @@ class MainResultsTests(unittest.TestCase):
             dest = Path(directory)
             write_main(configs, groups, evidence, dest)
             for name in ('summary.csv', 'coverage.csv', 'comparison.md'):
-                self.assertEqual((dest / name).read_bytes(), (self.path.parent / name).read_bytes())
+                if name.endswith('.csv'):
+                    assert_csv_equal(self, dest / name, self.path.parent / name)
+                else:
+                    self.assertEqual((dest / name).read_bytes(), (self.path.parent / name).read_bytes())
             with (dest / 'coverage.csv').open(newline='') as handle:
                 missing = [r for r in csv.DictReader(handle) if r['status'] == 'missing_records']
             self.assertEqual(len(missing), 36)
@@ -76,7 +102,25 @@ class MainResultsTests(unittest.TestCase):
             self.assertIn('| cifar10 | PGD-AT | recorded | 86.96 ± 0.11 | 51.48 ± 0.22 | '
                           '69.21 ± 0.19 | 66.90 | Archived rounded aggregate |', comparison)
             for name in ('summary.csv', 'coverage.csv'):
-                self.assertEqual((dest / name).read_bytes(), (self.path.parent / name).read_bytes())
+                assert_csv_equal(self, dest / name, self.path.parent / name)
+
+    def test_csv_comparison_only_tolerates_invisible_numeric_rounding(self):
+        reference = 'method,clean,std\nA,50,0.1\nB,51,0.2\n'
+        with tempfile.TemporaryDirectory() as directory:
+            expected, actual = Path(directory) / 'expected.csv', Path(directory) / 'actual.csv'
+            expected.write_text(reference)
+            actual.write_text(reference.replace('0.1', '0.10000000000000001'))
+            assert_csv_equal(self, actual, expected)
+            for changed in (reference.replace('50', '50.01'),
+                            reference.replace('0.1', '0.10000000001'),
+                            reference.replace('method,clean,std', 'method,std,clean'),
+                            reference.replace('A,50', 'renamed,50'),
+                            'method,clean,std\nB,51,0.2\nA,50,0.1\n',
+                            reference + 'C,52,0.3\n'):
+                with self.subTest(changed=changed):
+                    actual.write_text(changed)
+                    with self.assertRaises(AssertionError):
+                        assert_csv_equal(self, actual, expected)
 
     def test_invalid_archived_coverage_and_numbers_are_rejected(self):
         variants = [('missing group', self.archive_rows[:-1]),

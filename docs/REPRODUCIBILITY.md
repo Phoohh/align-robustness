@@ -1,5 +1,10 @@
 # Reviewer reproduction guide
 
+The following is the historical protocol guide. The revised method, validation
+split, and fixed-epoch full-data final runs are specified separately in
+[selection-free v2](../protocols/selection_free_v2/README.md). No historical result
+is automatically promoted to the revised protocol.
+
 This snapshot contains Align-only **without alignment-sample selection**.
 It provides runnable full-data training configurations and analysis of recorded
 CIFAR-10 sensitivity measurements. The coverage below distinguishes those two

@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "experiment_id": "v2_r18_L2_cifar100_independent_rho0p002_dev",
+  "arch": "r18",
+  "norm": "L2",
+  "dataset": "cifar100",
+  "selection": "none",
+  "candidate": "rho0p002",
+  "evidence": {
+    "completed_seeds": [],
+    "status": "new_run_not_evaluated"
+  },
+  "hyperparameters": {
+    "gamma": 0.002,
+    "awp_start": 10,
+    "lam": 1.0,
+    "bd_range": 0.0,
+    "bd_alpha": 0.75,
+    "lr": 0.1,
+    "weight_decay": 0.0005
+  },
+  "training": {
+    "epochs": 110,
+    "batch_size": 128,
+    "test_batch_size": 128,
+    "attack_steps": 10,
+    "temperature": 0.5
+  },
+  "evaluation": {
+    "protocol": "standard",
+    "batch_size": 128,
+    "aa_seed": 0
+  },
+  "protocol": {
+    "name": "selection_free_v2",
+    "stage": "development",
+    "attack_views": "independent",
+    "weight_perturbation": "align_only",
+    "validation_fraction": 0.1,
+    "split_seed": 2027,
+    "checkpoint_metric": "validation_pgd_accuracy"
+  }
+}
